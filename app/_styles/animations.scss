@@ -1,0 +1,57 @@
+.react-transition-group {
+	&-fade {
+		&-enter {
+			opacity: 0;
+			&-active {
+				opacity: 1;
+			}
+		}
+		&-exit {
+			opacity: 1;
+			&-active {
+				opacity: 0;
+			}
+		}
+		&-enter,
+		&-exit {
+			&-active {
+				transition: opacity 200ms;
+			}
+		}
+	}
+	&-slide {
+		&-right {
+			&-entering {
+				animation: left-to-right 500ms ease-in-out;
+			}
+			&-entered {
+				//transform: translateX(0%);
+			}
+			&-exiting {
+				animation: right-to-left 500ms ease-in-out;
+			}
+			&-exited {
+				//transform: translateX(0%);
+			}
+		}
+	}
+}
+
+@keyframes right-to-left {
+	from {
+		transform: translateX(10%);
+	}
+	to {
+		transform: translateX(0%);
+	}
+}
+
+@keyframes left-to-right {
+	from {
+		transform: translateX(-10%);
+	}
+	to {
+		transform: translateX(0%);
+	}
+
+}

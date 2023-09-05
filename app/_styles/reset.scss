@@ -6,9 +6,22 @@
 	padding: 0;
 }
 
+::-webkit-scrollbar {
+	display: none;
+}
+
+html,
+body {
+	overflow-x: hidden;
+}
+
 ul,
 ol {
 	list-style: none;
+}
+
+input:focus {
+	outline: none;
 }
 
 button,
@@ -19,4 +32,20 @@ a {
 
 a {
 	text-decoration: none;
+}
+
+a,
+li,
+p,
+div,
+span,
+button,
+input[type="button"] {
+	user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }

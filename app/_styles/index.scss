@@ -1,8 +1,9 @@
-@import "./tailwind.scss";
 @import "./reset.scss";
+@import "./animations.scss";
+@import "./tailwind.scss";
 
 body {
-	background-color: #F7F9FB;
+	background-color: #f7f9fb;
 	font-weight: 400;
 	font-size: 12px;
 }
