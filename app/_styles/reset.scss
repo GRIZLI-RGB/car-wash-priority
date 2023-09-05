@@ -1,0 +1,22 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+button,
+input[type="button"],
+a {
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+}
