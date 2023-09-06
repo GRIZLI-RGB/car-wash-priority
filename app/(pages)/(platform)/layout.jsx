@@ -32,7 +32,7 @@ export default function PlatformLayout({ children }) {
 							"text-center text-white text-sm font-semibold w-full py-2.5 bg-green--main rounded-2xl"
 						}>
 						<p>ООО</p>
-						<p>Название компании</p>
+						<p>«Название компании»</p>
 					</div>
 					<div className="bg-[#E5ECF6] py-[22px] px-6 w-full mt-4 rounded-2xl text-black-100 font-semibold">
 						<div className="text-sm flex justify-between items-center">
