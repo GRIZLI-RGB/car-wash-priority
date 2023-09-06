@@ -8,4 +8,7 @@
 		align-items: center;
 		justify-content: center;
 	}
+	.filter-svg-to-green {
+		filter: invert(74%) sepia(27%) saturate(6883%) hue-rotate(96deg) brightness(85%) contrast(70%);
+	}
 }

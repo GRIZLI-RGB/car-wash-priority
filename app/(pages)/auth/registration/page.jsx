@@ -49,7 +49,11 @@ export default function Registration() {
 						</div>
 					</div>
 					<div>
-						<Button clickHandler={() => setStep(2)} type={"success"}>Подтвердить</Button>
+						<Button
+							clickHandler={() => setStep(2)}
+							type={"success"}>
+							Подтвердить
+						</Button>
 						<p className={"text-sm text-black/40 text-center mt-4"}>
 							Не получили код?{" "}
 							<a className={"text-purple--main"} href="#">
@@ -88,7 +92,12 @@ export default function Registration() {
 							"302027, Орловская область, г Орёл, Октябрьская ул, д. 211, помещ. 114 офис 4"
 						}
 					/>
-					<Button clickHandler={() => setStep(3)} type={"success"} icon={"arrow-right"}>Продолжить</Button>
+					<Button
+						clickHandler={() => setStep(3)}
+						type={"success"}
+						icon={"arrow-right"}>
+						Продолжить
+					</Button>
 				</>
 			);
 		}
@@ -104,12 +113,18 @@ export default function Registration() {
 					<Input label={"Корреспондентский счёт"} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
-							<Button clickHandler={() => setStep(2)} type={"secondary"} icon={"arrow-left"}>
+							<Button
+								clickHandler={() => setStep(2)}
+								type={"secondary"}
+								icon={"arrow-left"}>
 								Вернуться
 							</Button>
 						</div>
 						<div className={"w-1/2"}>
-							<Button clickHandler={() => setStep(4)} type={"success"} icon={"arrow-right"}>
+							<Button
+								clickHandler={() => setStep(4)}
+								type={"success"}
+								icon={"arrow-right"}>
 								Продолжить
 							</Button>
 						</div>
@@ -137,12 +152,18 @@ export default function Registration() {
 					<Input label={"E-mail для информирования "} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
-							<Button clickHandler={() => setStep(3)} type={"secondary"} icon={"arrow-left"}>
+							<Button
+								clickHandler={() => setStep(3)}
+								type={"secondary"}
+								icon={"arrow-left"}>
 								Вернуться
 							</Button>
 						</div>
 						<div className={"w-1/2"}>
-							<Button clickHandler={() => setStep(5)} type={"success"} icon={"arrow-right"}>
+							<Button
+								clickHandler={() => setStep(5)}
+								type={"success"}
+								icon={"arrow-right"}>
 								Продолжить
 							</Button>
 						</div>
@@ -217,17 +238,27 @@ export default function Registration() {
 									src={"/img/icons/question.svg"}
 									alt={"Иконка вопроса"}
 								/>
-								<p className={"text-sm text-black/40 max-[800px]:text-[12px]"}>
+								<p
+									className={
+										"text-sm text-black/40 max-[800px]:text-[12px]"
+									}>
 									/стоимость мойки
 								</p>
 							</div>
 						</div>
 					</div>
 					<div className="flex flex-col gap-4 w-full">
-						<Button clickHandler={() => setStep(6)} type={"success"} icon={"arrow-right"}>
+						<Button
+							clickHandler={() => setStep(6)}
+							type={"success"}
+							icon={"arrow-right"}>
 							Продолжить
 						</Button>
-						<Button type={"secondary"} clickHandler={() => alert("Вы прошли регистрацию")}>Пропустить</Button>
+						<Button
+							type={"secondary"}
+							clickHandler={() => alert("Вы прошли регистрацию")}>
+							Пропустить
+						</Button>
 					</div>
 				</>
 			);
@@ -257,8 +288,16 @@ export default function Registration() {
 						</p>
 					</div>
 					<div className="flex flex-col gap-4 w-full">
-						<Button clickHandler={() => alert("Вы прошли регистрацию")} type={"success"}>Получить счет</Button>
-						<Button clickHandler={() => alert("Вы прошли регистрацию")} type={"secondary"}>Пропустить</Button>
+						<Button
+							clickHandler={() => alert("Вы прошли регистрацию")}
+							type={"success"}>
+							Получить счет
+						</Button>
+						<Button
+							clickHandler={() => alert("Вы прошли регистрацию")}
+							type={"secondary"}>
+							Пропустить
+						</Button>
 					</div>
 					<p className={"text-center text-sm text-black/40"}>
 						Если вы пропустите этот шаг, то для вашего аккаунта

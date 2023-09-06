@@ -12,6 +12,7 @@ module.exports = {
 				"green--secondary": "#44CB7E",
 				"purple--main": "#95A4FC",
 				"purple--secondary": "#C6C7F8",
+				"red--secondary": "#FF4747",
 				"black-100": "#1c1c1c",
 			},
 		},

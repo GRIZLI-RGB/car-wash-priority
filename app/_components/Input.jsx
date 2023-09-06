@@ -4,7 +4,7 @@ export default function Input({ type, label, placeholder }) {
 			return (
 				<input
 					className={
-						"text-center w-[58px] h-[58px] flex-middle rounded-lg font-semibold text-2xl leading-[150%] border border-solid border-black/20 bg-white"
+						"focus:border-black/20 text-center w-[58px] h-[58px] flex-middle rounded-lg font-semibold text-2xl leading-[150%] border border-solid border-black/10 bg-white"
 					}
 					type={"number"}
 				/>
