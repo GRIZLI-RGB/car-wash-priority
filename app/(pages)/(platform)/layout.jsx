@@ -1,7 +1,7 @@
 "use client";
 
 import ZeroContent from "@/app/(pages)/(platform)/_components/ZeroContent";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import clsx from "clsx";
 import { Operation } from "@/app/(pages)/(platform)/_components/Operation";
 import Image from "next/image";
@@ -15,8 +15,12 @@ export default function PlatformLayout({ children }) {
 	const pathname = usePathname();
 
 	const [isHaveContent, setIsHaveContent] = useState(
-		window.location.href.split("#")[1] === "fill",
+		false
 	);
+
+	useEffect(() => {
+		setIsHaveContent(window.location.href.split("#")[1] === "fill",)
+	}, [])
 
 	const [showModalRefill, setShowModalRefill] = useState(false);
 
