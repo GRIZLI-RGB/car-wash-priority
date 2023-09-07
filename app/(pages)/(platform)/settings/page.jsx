@@ -5,6 +5,7 @@ import Button from "@/app/_components/Button";
 
 import toast from "react-hot-toast";
 import Checkbox from "@/app/_components/Checkbox";
+import {useEffect, useState} from "react";
 
 const repeatingStyles = {
 	block: "rounded-2xl bg-[#F7F9FB] p-6 w-full gap-6 flex flex-col",
@@ -12,6 +13,12 @@ const repeatingStyles = {
 };
 
 export default function Settings() {
+	const [windowWidth, setWindowWidth] = useState(0);
+	
+	useEffect(() => {
+		setWindowWidth(window.innerWidth)
+	}, [window.innerWidth]);
+
 	return (
 		<div className={"flex-middle flex-col gap-6"}>
 			<div className={repeatingStyles.block}>
@@ -86,7 +93,7 @@ export default function Settings() {
 								toast.success("Изменения сохранены")
 							}
 							type={"medium-black"}>
-							{window.innerWidth <= 950 ? "Сохранить" : "Сохранить изменения"}
+							{windowWidth <= 950 ? "Сохранить" : "Сохранить изменения"}
 						</Button>
 					</div>
 				</div>

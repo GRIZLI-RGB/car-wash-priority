@@ -16,6 +16,12 @@ export default function PlatformLayout({ children }) {
 
 	const [isHaveContent, setIsHaveContent] = useState(false);
 
+	const [windowWidth, setWindowWidth] = useState(0);
+
+	useEffect(() => {
+		setWindowWidth(window.innerWidth)
+	}, [window.innerWidth]);
+
 	useEffect(() => {
 		setIsHaveContent(window.location.href.split("#")[1] === "fill");
 	}, []);
@@ -83,7 +89,7 @@ export default function PlatformLayout({ children }) {
 					<div className={"mt-3"}>
 						<Button type={"danger-secondary"}>Выйти</Button>
 					</div>
-					{window.innerWidth > 768 && (
+					{windowWidth > 768 && (
 						<div className={"relative mt-6 flex-middle flex-col"}>
 							<div
 								className={
@@ -105,7 +111,7 @@ export default function PlatformLayout({ children }) {
 				</aside>
 				<div className={"grow p-6 pb-4 lg:p-3"}>
 					{children}
-					{window.innerWidth > 768 && (
+					{windowWidth > 768 && (
 						<div className="flex gap-12 text-black/40 mt-12 lg:flex-col lg:gap-3 lg:items-center">
 							<a
 								className={"hover:opacity-75 ml-auto lg:ml-0"}
@@ -152,7 +158,7 @@ export default function PlatformLayout({ children }) {
 						)}
 					</aside>
 				)}
-				{window.innerWidth <= 768 && (
+				{windowWidth <= 768 && (
 					<>
 						<div className={"relative flex-middle flex-col"}>
 							<div

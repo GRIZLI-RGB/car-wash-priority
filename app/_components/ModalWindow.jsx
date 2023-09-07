@@ -30,7 +30,7 @@ export default function ModalWindow({ trigger, setTrigger, title, children }) {
 						<div
 							ref={windowBox}
 							className={
-								"bg-white rounded-2xl px-36 py-14 flex-middle flex-col gap-7 max-w-[676px]"
+								"md:px-8 md:py-8 bg-white rounded-2xl px-36 py-14 flex-middle flex-col gap-7 max-w-[676px]"
 							}>
 							<div
 								className={
