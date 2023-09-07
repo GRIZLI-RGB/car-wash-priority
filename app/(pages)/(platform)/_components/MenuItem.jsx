@@ -9,7 +9,7 @@ export default function MenuItem({ text, path, icon }) {
 	return (
 		<div
 			className={clsx(
-				"rounded-lg flex items-center gap-3 p-3 text-sm text-black-100 hover:bg-black/5 duration-300",
+				"md:w-full rounded-lg flex items-center gap-3 p-3 md:p-3 md:px-5 lg:p-1.5 text-sm text-black-100 hover:bg-black/5 duration-300",
 				{
 					"bg-black/5 text-green--main font-semibold":
 						pathname === path,

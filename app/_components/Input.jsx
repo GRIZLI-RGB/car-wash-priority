@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Input({ type, label, placeholder }) {
 	switch (type) {
 		case "one-number": {
@@ -8,6 +10,48 @@ export default function Input({ type, label, placeholder }) {
 					}
 					type={"number"}
 				/>
+			);
+		}
+		case "big-input:disabled": {
+			return (
+				<div className={"relative w-[620px] lg:w-full"}>
+					{label && (
+						<p className={"text-black/40 absolute top-4 left-5"}>
+							{label}
+						</p>
+					)}
+					<input
+						className={
+							"bg-white h-[74px] rounded-lg px-5 pt-[38px] pb-4 border border-solid border-black/10 text-sm text-black/20 placeholder:text-black/20 w-full focus:border-black/20"
+						}
+						placeholder={placeholder}
+						disabled
+					/>
+					<Image
+						className={"absolute bottom-4 right-5"}
+						width={16}
+						height={16}
+						src={"/img/icons/checkmark.svg"}
+						alt={"Подтверждено"}
+					/>
+				</div>
+			);
+		}
+		case "big-input": {
+			return (
+				<div className={"relative w-[620px] lg:w-full"}>
+					{label && (
+						<p className={"text-black/40 absolute top-4 left-5"}>
+							{label}
+						</p>
+					)}
+					<input
+						className={
+							"bg-white h-[74px] rounded-lg px-5 pt-[38px] pb-4 border border-solid border-black/10 text-sm text-black-100 placeholder:text-black/20 w-full focus:border-black/20"
+						}
+						placeholder={placeholder}
+					/>
+				</div>
 			);
 		}
 		default: {

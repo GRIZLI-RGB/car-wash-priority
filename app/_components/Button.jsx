@@ -3,6 +3,28 @@ import clsx from "clsx";
 
 export default function Button({ type, children, icon, clickHandler }) {
 	switch (type) {
+		case "medium-gray": {
+			return (
+				<button
+					onClick={clickHandler}
+					className={
+						"duration-500 hover:opacity-75 rounded-lg px-2 py-1 text-sm text-black-100 bg-black/5"
+					}>
+					{children}
+				</button>
+			);
+		}
+		case "medium-black": {
+			return (
+				<button
+					onClick={clickHandler}
+					className={
+						"duration-500 hover:opacity-75 rounded-lg px-2 py-1 text-sm text-white bg-black-100"
+					}>
+					{children}
+				</button>
+			);
+		}
 		case "success-secondary":
 			return (
 				<button

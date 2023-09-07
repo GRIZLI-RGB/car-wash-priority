@@ -16,6 +16,14 @@ module.exports = {
 				"black-100": "#1c1c1c",
 			},
 		},
+		screens: {
+			lg: {
+				max: "1168px",
+			},
+			md: {
+				max: "768px",
+			},
+		},
 	},
 	plugins: [],
 };
