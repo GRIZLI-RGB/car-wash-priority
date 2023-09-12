@@ -17,9 +17,12 @@ export default function RootLayout({ children }) {
 		<html lang="ru" className={inter.className}>
 			<body>
 				{children}
-				<Toaster position={"bottom-right"} toastOptions={{
-					className: "text-sm text-black-100 border border-black/10"
-				}}/>
+				<Toaster
+					position={"bottom-right"}
+					toastOptions={{
+						className: "text-sm text-black-100 border border-black/10 z-50",
+					}}
+				/>
 			</body>
 		</html>
 	);

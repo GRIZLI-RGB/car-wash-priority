@@ -11,4 +11,8 @@
 	.filter-svg-to-green {
 		filter: invert(74%) sepia(27%) saturate(6883%) hue-rotate(96deg) brightness(85%) contrast(70%);
 	}
+	.border-l-black-low-opacity-gradient {
+		border-left: 1px solid;
+		border-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%) 1;
+	}
 }

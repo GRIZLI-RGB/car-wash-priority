@@ -25,7 +25,7 @@ export default function ModalWindow({ trigger, setTrigger, title, children }) {
 					exit={{ opacity: 0 }}>
 					<div
 						className={
-							"fixed top-0 left-0 bottom-0 right-0 bg-black/25 flex-middle"
+							"fixed top-0 left-0 bottom-0 right-0 bg-black/25 flex-middle z-40 p-3"
 						}>
 						<div
 							ref={windowBox}
@@ -34,7 +34,7 @@ export default function ModalWindow({ trigger, setTrigger, title, children }) {
 							}>
 							<div
 								className={
-									"flex-middle flex-col gap-2 max-w-[225px]"
+									"flex-middle flex-col gap-2 max-w-[330px]"
 								}>
 								<h6
 									className={

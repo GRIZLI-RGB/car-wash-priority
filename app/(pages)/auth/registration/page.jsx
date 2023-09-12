@@ -15,43 +15,66 @@ export default function Registration() {
 	// step = 6 - рекомендуемое пополнение
 	const [step, setStep] = useState(1);
 
+	const [verificationCode, setVerificationCode] = useState(["", "", "", ""]);
+
+	const [costCalculation, setCostCalculation] = useState(["", ""])
+
 	switch (step) {
 		case 1: {
 			return (
 				<>
-					<Image
-						width={"80"}
-						height={"80"}
-						src={"/img/icons/phone.svg"}
-						alt={"Иконка телефона"}
-					/>
+					<Image width={"80"} height={"80"} src={"/img/icons/phone.svg"} alt={"Иконка телефона"} />
 					<TitleAndOpinion title={"Верификация номера"}>
 						Мы отправили код подтверждения на номер:
 					</TitleAndOpinion>
-					<div className={"text-lg font-semibold text-black-100"}>
-						* *** *** - 16 - 66
-					</div>
+					<div className={"text-lg font-semibold text-black-100"}>* *** *** - 16 - 66</div>
 					<div className={"text-center"}>
-						<p
-							className={
-								"mb-3 text-sm font-semibold text-black-100"
-							}>
-							Введите 4 цифры из сообщения
-						</p>
-						<div
-							className={
-								"flex gap-2 items-center justify-center"
-							}>
-							<Input type={"one-number"} />
-							<Input type={"one-number"} />
-							<Input type={"one-number"} />
-							<Input type={"one-number"} />
+						<p className={"mb-3 text-sm font-semibold text-black-100"}>Введите 4 цифры из сообщения</p>
+						<div className={"flex gap-2 items-center justify-center"}>
+							<Input
+								dataFocus={"focus-1"}
+								type={"one-number"}
+								value={verificationCode[0]}
+								setValue={num => {
+									let old = [...verificationCode];
+									old[0] = num;
+									setVerificationCode(old);
+								}}
+							/>
+							<Input
+								dataFocus={"focus-2"}
+								type={"one-number"}
+								value={verificationCode[1]}
+								setValue={num => {
+									let old = [...verificationCode];
+									old[1] = num;
+									setVerificationCode(old);
+								}}
+							/>
+							<Input
+								dataFocus={"focus-3"}
+								type={"one-number"}
+								value={verificationCode[2]}
+								setValue={num => {
+									let old = [...verificationCode];
+									old[2] = num;
+									setVerificationCode(old);
+								}}
+							/>
+							<Input
+								dataFocus={"focus-4"}
+								type={"one-number"}
+								value={verificationCode[3]}
+								setValue={num => {
+									let old = [...verificationCode];
+									old[3] = num;
+									setVerificationCode(old);
+								}}
+							/>
 						</div>
 					</div>
 					<div>
-						<Button
-							clickHandler={() => setStep(2)}
-							type={"success"}>
+						<Button clickHandler={() => setStep(2)} type={"success"}>
 							Подтвердить
 						</Button>
 						<p className={"text-sm text-black/40 text-center mt-4"}>
@@ -76,26 +99,16 @@ export default function Registration() {
 					</TitleAndOpinion>
 					<Input label={"ИНН"} placeholder={"366310082593"} />
 					<Input label={"ОГРН"} placeholder={"1085752004535"} />
-					<Input
-						label={"Форма собственности"}
-						placeholder={"ООО без НДС"}
-					/>
+					<Input label={"Форма собственности"} placeholder={"ООО без НДС"} />
 					<Input
 						label={"Наименование компании"}
-						placeholder={
-							'ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "ТДВ"'
-						}
+						placeholder={'ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "ТДВ"'}
 					/>
 					<Input
 						label={"Юридический адрес"}
-						placeholder={
-							"302027, Орловская область, г Орёл, Октябрьская ул, д. 211, помещ. 114 офис 4"
-						}
+						placeholder={"302027, Орловская область, г Орёл, Октябрьская ул, д. 211, помещ. 114 офис 4"}
 					/>
-					<Button
-						clickHandler={() => setStep(3)}
-						type={"success"}
-						icon={"arrow-right"}>
+					<Button clickHandler={() => setStep(3)} type={"success"} icon={"arrow-right"}>
 						Продолжить
 					</Button>
 				</>
@@ -113,18 +126,12 @@ export default function Registration() {
 					<Input label={"Корреспондентский счёт"} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
-							<Button
-								clickHandler={() => setStep(2)}
-								type={"secondary"}
-								icon={"arrow-left"}>
+							<Button clickHandler={() => setStep(2)} type={"secondary"} icon={"arrow-left"}>
 								Вернуться
 							</Button>
 						</div>
 						<div className={"w-1/2"}>
-							<Button
-								clickHandler={() => setStep(4)}
-								type={"success"}
-								icon={"arrow-right"}>
+							<Button clickHandler={() => setStep(4)} type={"success"} icon={"arrow-right"}>
 								Продолжить
 							</Button>
 						</div>
@@ -138,12 +145,11 @@ export default function Registration() {
 					<TitleAndOpinion title={"Информация о представителе"}>
 						<p className={"flex gap-3 flex-col"}>
 							<span>
-								Укажите информацию о представителе организации,
-								который будет пользоваться личным кабинетом.
+								Укажите информацию о представителе организации, который будет пользоваться личным
+								кабинетом.
 							</span>
 							<span>
-								Почта необходима для получения счетов для
-								оплаты, актов выполенных работ и информации о
+								Почта необходима для получения счетов для оплаты, актов выполенных работ и информации о
 								изменениях.
 							</span>
 						</p>
@@ -152,18 +158,12 @@ export default function Registration() {
 					<Input label={"E-mail для информирования "} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
-							<Button
-								clickHandler={() => setStep(3)}
-								type={"secondary"}
-								icon={"arrow-left"}>
+							<Button clickHandler={() => setStep(3)} type={"secondary"} icon={"arrow-left"}>
 								Вернуться
 							</Button>
 						</div>
 						<div className={"w-1/2"}>
-							<Button
-								clickHandler={() => setStep(5)}
-								type={"success"}
-								icon={"arrow-right"}>
+							<Button clickHandler={() => setStep(5)} type={"success"} icon={"arrow-right"}>
 								Продолжить
 							</Button>
 						</div>
@@ -174,16 +174,11 @@ export default function Registration() {
 		case 5: {
 			return (
 				<>
-					<TitleAndOpinion
-						title={"Расчет расходов и пополнения баланса"}>
+					<TitleAndOpinion title={"Расчет расходов и пополнения баланса"}>
 						<p className={"flex gap-3 flex-col"}>
+							<span>Укажите данные своего автопарка, мы рассчитаем рекомендуему сумму пополнения.</span>
 							<span>
-								Укажите данные своего автопарка, мы рассчитаем
-								рекомендуему сумму пополнения.
-							</span>
-							<span>
-								При пополнении баланса на рекомендуюмую сумму,
-								вы получаете возможность{" "}
+								При пополнении баланса на рекомендуюмую сумму, вы получаете возможность{" "}
 								<a className={"text-purple--main"} href="#">
 									овердрафта
 								</a>
@@ -195,68 +190,37 @@ export default function Registration() {
 						className={
 							"w-full rounded-2xl  max-[800px]:px-6 px-12 py-6 bg-[rgba(229,236,246,0.50)] flex flex-col gap-3 items-center"
 						}>
-						<p
-							className={
-								"text-sm font-semibold text-black-100 text-center"
-							}>
+						<p className={"text-sm font-semibold text-black-100 text-center"}>
 							Сколько машин в организации?
 						</p>
-						<Input type={"one-number"} />
-						<Image
-							width={32}
-							height={32}
-							src={"/img/icons/close.svg"}
-							alt={"Иконка умножения"}
-						/>
-						<p
-							className={
-								"text-sm font-semibold text-black-100 text-center"
-							}>
+						<Input type={"one-number"} dataFocus={"focus-1"} value={costCalculation[0]} setValue={num => {
+							let old = [...costCalculation]
+							old[0] = num
+							setCostCalculation(old)
+						}}/>
+						<Image width={32} height={32} src={"/img/icons/close.svg"} alt={"Иконка умножения"} />
+						<p className={"text-sm font-semibold text-black-100 text-center"}>
 							Сколько моек в неделю будет для каждой машины?
 						</p>
-						<Input type={"one-number"} />
-						<Image
-							width={32}
-							height={32}
-							src={"/img/icons/close.svg"}
-							alt={"Иконка умножения"}
-						/>
-						<div
-							className={
-								"flex gap-2 items-center justify-center"
-							}>
-							<div
-								className={
-									"text-5xl text-green--main font-semibold max-[800px]:text-3xl"
-								}>
-								150₽
-							</div>
+						<Input type={"one-number"} dataFocus={"focus-2"} value={costCalculation[1]} setValue={num => {
+							let old = [...costCalculation]
+							old[1] = num
+							setCostCalculation(old)
+						}}/>
+						<Image width={32} height={32} src={"/img/icons/close.svg"} alt={"Иконка умножения"} />
+						<div className={"flex gap-2 items-center justify-center"}>
+							<div className={"text-5xl text-green--main font-semibold max-[800px]:text-3xl"}>150₽</div>
 							<div>
-								<Image
-									width={19}
-									height={19}
-									src={"/img/icons/question.svg"}
-									alt={"Иконка вопроса"}
-								/>
-								<p
-									className={
-										"text-sm text-black/40 max-[800px]:text-[12px]"
-									}>
-									/стоимость мойки
-								</p>
+								<Image width={19} height={19} src={"/img/icons/question.svg"} alt={"Иконка вопроса"} />
+								<p className={"text-sm text-black/40 max-[800px]:text-[12px]"}>/стоимость мойки</p>
 							</div>
 						</div>
 					</div>
 					<div className="flex flex-col gap-4 w-full">
-						<Button
-							clickHandler={() => setStep(6)}
-							type={"success"}
-							icon={"arrow-right"}>
+						<Button clickHandler={() => setStep(6)} type={"success"} icon={"arrow-right"}>
 							Продолжить
 						</Button>
-						<Button
-							type={"secondary"}
-							clickHandler={() => alert("Вы прошли регистрацию")}>
+						<Button type={"secondary"} clickHandler={() => alert("Вы прошли регистрацию")}>
 							Пропустить
 						</Button>
 					</div>
@@ -267,19 +231,13 @@ export default function Registration() {
 			return (
 				<>
 					<TitleAndOpinion title={"Рекомендуемое пополнение"}>
-						Чтобы получить возможность овердрафта пополните баланс
-						на рекомендуему сумму
+						Чтобы получить возможность овердрафта пополните баланс на рекомендуему сумму
 					</TitleAndOpinion>
 					<div
 						className={
 							"w-full rounded-2xl px-12 py-10 bg-[rgba(229,236,246,0.50)] flex flex-col gap-3 items-center"
 						}>
-						<p
-							className={
-								"text-sm font-semibold text-black-100 text-center"
-							}>
-							Рекомендуемая сумма
-						</p>
+						<p className={"text-sm font-semibold text-black-100 text-center"}>Рекомендуемая сумма</p>
 						<p
 							className={
 								"text-center px-[21px] py-[11px] flex-middle rounded-lg font-semibold text-2xl leading-[150%] border border-solid border-black/20 bg-white"
@@ -288,20 +246,15 @@ export default function Registration() {
 						</p>
 					</div>
 					<div className="flex flex-col gap-4 w-full">
-						<Button
-							clickHandler={() => alert("Вы прошли регистрацию")}
-							type={"success"}>
+						<Button clickHandler={() => alert("Вы прошли регистрацию")} type={"success"}>
 							Получить счет
 						</Button>
-						<Button
-							clickHandler={() => alert("Вы прошли регистрацию")}
-							type={"secondary"}>
+						<Button clickHandler={() => alert("Вы прошли регистрацию")} type={"secondary"}>
 							Пропустить
 						</Button>
 					</div>
 					<p className={"text-center text-sm text-black/40"}>
-						Если вы пропустите этот шаг, то для вашего аккаунта
-						возможность овердрафта будет отключена!
+						Если вы пропустите этот шаг, то для вашего аккаунта возможность овердрафта будет отключена!
 					</p>
 				</>
 			);

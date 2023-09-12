@@ -109,8 +109,10 @@ export default function PlatformLayout({ children }) {
 						</div>
 					)}
 				</aside>
-				<div className={"grow p-6 pb-4 lg:p-3"}>
-					{children}
+				<div className={"grow p-6 pb-4 lg:p-3 flex flex-col"}>
+					<div className={"grow"}>
+						{children}
+					</div>
 					{windowWidth > 768 && (
 						<div className="flex gap-12 text-black/40 mt-12 lg:flex-col lg:gap-3 lg:items-center">
 							<a
@@ -205,7 +207,7 @@ export default function PlatformLayout({ children }) {
 					</span>
 				</div>
 				<Input label={"Сумма пополнения"} />
-				<div className={"w-[388px]"}>
+				<div className={"w-[388px] md:w-full"}>
 					<Button type={"success"}>Получить счет на оплату</Button>
 				</div>
 			</ModalWindow>

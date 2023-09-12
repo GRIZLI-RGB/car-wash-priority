@@ -53,6 +53,7 @@ export default function Button({ type, children, icon, clickHandler }) {
 						"flex-middle gap-2 duration-300 hover:opacity-75  p-2 text-lg font-semibold text-center w-full rounded-lg",
 						{
 							"text-white bg-green--main": type === "success",
+							"text-white bg-red--secondary": type === "danger",
 							"text-black-100 bg-black/5": type === "secondary",
 						},
 						"max-[430px]:text-[16px]",
