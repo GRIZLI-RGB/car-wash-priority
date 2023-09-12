@@ -10,7 +10,7 @@ export default function Table({ head, content }) {
 
 	useEffect(() => {
 		setWindowWidth(window.innerWidth)
-	}, [window.innerWidth]);
+	}, []);
 
 	const getTableCell = (item, cell, index) => {
 		return (

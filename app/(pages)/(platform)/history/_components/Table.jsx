@@ -8,7 +8,7 @@ export default function Table() {
 
 	useEffect(() => {
 		setWindowWidth(window.innerWidth)
-	}, [window.innerWidth]);
+	}, []);
 
 	if (windowWidth > 768) {
 		return (

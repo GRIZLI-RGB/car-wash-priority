@@ -20,7 +20,7 @@ export default function PlatformLayout({ children }) {
 
 	useEffect(() => {
 		setWindowWidth(window.innerWidth)
-	}, [window.innerWidth]);
+	}, []);
 
 	useEffect(() => {
 		setIsHaveContent(window.location.href.split("#")[1] === "fill");

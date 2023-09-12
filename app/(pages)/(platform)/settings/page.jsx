@@ -17,7 +17,7 @@ export default function Settings() {
 	
 	useEffect(() => {
 		setWindowWidth(window.innerWidth)
-	}, [window.innerWidth]);
+	}, []);
 
 	return (
 		<div className={"flex-middle flex-col gap-6"}>
