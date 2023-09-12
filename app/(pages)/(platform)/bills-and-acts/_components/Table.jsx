@@ -9,8 +9,8 @@ export default function Table({ head, content }) {
 	const [windowWidth, setWindowWidth] = useState(0);
 
 	useEffect(() => {
-		setWindowWidth(window.innerWidth);
-	}, [])
+		setWindowWidth(window.innerWidth)
+	}, [window.innerWidth]);
 
 	const getTableCell = (item, cell, index) => {
 		return (
