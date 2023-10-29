@@ -5,6 +5,9 @@ import Button from "@/app/_components/Button";
 import TitleAndOpinion from "@/app/(pages)/auth/_components/TitleAndOpinion";
 import { useState } from "react";
 import Input from "@/app/_components/Input";
+import {reg, verifyTel} from "../reg";
+import {readCookie} from "@/app/utils/cookie";
+import {sendAuthCode} from "@/app/(pages)/auth/auth";
 
 export default function Registration() {
 	// step = 1 - подтверждение номера
@@ -13,9 +16,12 @@ export default function Registration() {
 	// step = 4 - информация о представителе
 	// step = 5 - расчет расходов и пополнения баланса
 	// step = 6 - рекомендуемое пополнение
+	const organizationId = readCookie("organization_id");
+	const phone = readCookie("phone")
+
 	const [step, setStep] = useState(1);
 
-	const [verificationCode, setVerificationCode] = useState(["", "", "", ""]);
+	const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""]);
 
 	const [costCalculation, setCostCalculation] = useState(["", ""])
 
@@ -29,57 +35,27 @@ export default function Registration() {
 					</TitleAndOpinion>
 					<div className={"text-lg font-semibold text-black-100"}>* *** *** - 16 - 66</div>
 					<div className={"text-center"}>
-						<p className={"mb-3 text-sm font-semibold text-black-100"}>Введите 4 цифры из сообщения</p>
+						<p className={"mb-3 text-sm font-semibold text-black-100"}>Введите 6 цифры из сообщения</p>
 						<div className={"flex gap-2 items-center justify-center"}>
-							<Input
-								dataFocus={"focus-1"}
+							{verificationCode.map((value, index) => <Input
+								dataFocus={`focus-${index+1}`}
 								type={"one-number"}
-								value={verificationCode[0]}
+								value={verificationCode[index]}
 								setValue={num => {
 									let old = [...verificationCode];
-									old[0] = num;
+									old[index] = num;
 									setVerificationCode(old);
 								}}
-							/>
-							<Input
-								dataFocus={"focus-2"}
-								type={"one-number"}
-								value={verificationCode[1]}
-								setValue={num => {
-									let old = [...verificationCode];
-									old[1] = num;
-									setVerificationCode(old);
-								}}
-							/>
-							<Input
-								dataFocus={"focus-3"}
-								type={"one-number"}
-								value={verificationCode[2]}
-								setValue={num => {
-									let old = [...verificationCode];
-									old[2] = num;
-									setVerificationCode(old);
-								}}
-							/>
-							<Input
-								dataFocus={"focus-4"}
-								type={"one-number"}
-								value={verificationCode[3]}
-								setValue={num => {
-									let old = [...verificationCode];
-									old[3] = num;
-									setVerificationCode(old);
-								}}
-							/>
+							/>)}
 						</div>
 					</div>
 					<div>
-						<Button clickHandler={() => setStep(2)} type={"success"}>
+						<Button clickHandler={async () => await verifyTel({phone: phone, code: verificationCode.join("")}) && setStep(2)} type={"success"}>
 							Подтвердить
 						</Button>
 						<p className={"text-sm text-black/40 text-center mt-4"}>
 							Не получили код?{" "}
-							<a className={"text-purple--main"} href="#">
+							<a className={"text-purple--main"} href="#" onClick={() => sendAuthCode({phone: phone})}>
 								Выслать новый
 							</a>{" "}
 							или{" "}
