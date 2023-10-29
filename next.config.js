@@ -1,4 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+/** @type {import("next").NextConfig} */
 
-module.exports = nextConfig;
+module.exports = {
+	env: {
+		host: "https://eco.null-it.com",
+	},
+};

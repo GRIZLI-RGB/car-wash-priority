@@ -2,41 +2,51 @@
 
 import Footer from "@/app/(pages)/auth/_components/Footer";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import {useRef, useState} from "react";
 import clsx from "clsx";
-import { CSSTransition, SwitchTransition, Transition } from "react-transition-group";
+import {CSSTransition, SwitchTransition, Transition} from "react-transition-group";
 import Button from "@/app/_components/Button";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 import Input from "@/app/_components/Input";
+import axios from "axios";
+import ModalWindow from "@/app/_components/ModalWindow";
+import Verify from "@/app/(pages)/auth/_components/Verify";
+import {sendAuthCode} from "@/app/(pages)/auth/auth";
+import {reg} from "./reg";
 
 export default function Auth() {
 	const [isLogin, setIsLogin] = useState(true);
 
 	const [loginData, setLoginData] = useState({
-		telephone: "",
+		phone: "",
 	});
 	const [registrationData, setRegistrationData] = useState({
-		telephone: "",
+		phone: "",
 		inn: "",
 	});
+	const [modalVerify, setModalVerify] = useState(false);
 
 	const router = useRouter();
 
 	const nodeRef = useRef(null);
 
-	const validateLogin = () => {
-		return true
-	}
+	const handleAuth = async () => {
+		const isValid = sendAuthCode(loginData);
 
-	const validateRegistration = () => {
-
-	}
-
-	const handleAuth = () => {
-		if (isLogin && validateLogin()) {
-			alert("Вы вошли в аккаунт");
+		if (isLogin && isValid) {
+			setModalVerify(true);
 		} else {
 			router.push("/auth/registration");
+		}
+	};
+
+	const handleReg = async () => {
+		const isValid = await reg(registrationData);
+
+		if (isValid) {
+			router.push("/auth/registration");
+		} else {
+			console.log("Данные не валидны");
 		}
 	};
 
@@ -101,14 +111,18 @@ export default function Auth() {
 					</Transition>
 					<div className={"flex flex-col gap-7"}>
 						<Input
-							value={loginData.telephone}
-							setValue={text => setLoginData({ telephone: text })}
+							value={loginData.phone}
+							setValue={text => {
+								setLoginData({phone: text});
+								setRegistrationData({...registrationData, phone: text});
+							}}
 							placeholder={"Номер телефона"}
 							getOnlyNumber
 						/>
-						{!isLogin && <Input placeholder={"ИНН организации"} getOnlyNumber />}
+						{!isLogin && <Input placeholder={"ИНН организации"} getOnlyNumber
+											setValue={text => setRegistrationData({...registrationData, inn: text})} />}
 					</div>
-					<Button type={"success"} clickHandler={handleAuth}>
+					<Button type={"success"} clickHandler={isLogin ? handleAuth : handleReg}>
 						<SwitchTransition>
 							<CSSTransition
 								key={isLogin}
@@ -134,6 +148,10 @@ export default function Auth() {
 				</div>
 			</div>
 			<Footer textColor={"white"} />
+			<ModalWindow trigger={modalVerify} setTrigger={(arg) => setModalVerify(arg)}>
+				<span></span>
+				<Verify phone={loginData.phone} closeModal={() => setModalVerify(false)} />
+			</ModalWindow>
 		</section>
 	);
 }
