@@ -1,9 +1,11 @@
 import axios from "axios";
+import {axiosInstance} from "@/app/utils/axios-instance";
+import {readCookie} from "@/app/utils/cookie";
 
 export async function reg(data) {
 	const res = await axios.post(`${process.env.host}/api/v2/organizations/registration/create`, data);
 
-	console.log("res", res)
+	console.log("res", res);
 
 	try {
 		if (res.status === 200) {
@@ -24,14 +26,32 @@ export async function verifyTel(data) {
 
 	try {
 		if (res.status === 200) {
-			const tokenExpiryTime = new Date(res.data.data.expires_at).getTime();
-
-			document.cookie = "bearer_token=" + res.data.data.bearer_token + "; path=/; samesite=lax; expires=" + new Date(tokenExpiryTime).toUTCString();
+			const tokenExpiryTime = new Date(res.data.auth.expires_at).getTime();
+			document.cookie = "bearer_token=" + res.data.auth.bearer_token + "; path=/; samesite=lax; expires=" + new Date(tokenExpiryTime).toUTCString();
 
 			return true;
+		} else {
+			console.log("Неудачная проверка номера:", res.status);
+			return false;
 		}
-		console.log("Неудачная проверка номера:", res.status);
-	} catch(error) {
+	} catch (error) {
 		console.log("Неудачная проверка номера:", error);
+		return false;
+	}
+}
+
+export async function setData(data) {
+	const res = await axiosInstance.post(`/api/v2/organizations/:${readCookie("organization_id")}/registration/set-data`, data);
+
+	try {
+		if (res.status === 200) {
+			return true;
+		} else {
+			console.log("Неудачное заполнение данных:", res.status);
+			return false;
+		}
+	} catch (error) {
+		console.log("Неудачное заполнение данных:", error);
+		return false;
 	}
 }

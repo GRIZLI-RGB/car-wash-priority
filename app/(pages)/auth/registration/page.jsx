@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Button from "@/app/_components/Button";
 import TitleAndOpinion from "@/app/(pages)/auth/_components/TitleAndOpinion";
-import { useState } from "react";
+import {useState} from "react";
 import Input from "@/app/_components/Input";
-import {reg, verifyTel} from "../reg";
+import {reg, setData, verifyTel} from "../reg";
 import {readCookie} from "@/app/utils/cookie";
 import {sendAuthCode} from "@/app/(pages)/auth/auth";
 
@@ -17,13 +17,28 @@ export default function Registration() {
 	// step = 5 - расчет расходов и пополнения баланса
 	// step = 6 - рекомендуемое пополнение
 	const organizationId = readCookie("organization_id");
-	const phone = readCookie("phone")
+	const phone = readCookie("phone");
 
 	const [step, setStep] = useState(1);
 
-	const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""]);
+	const [verificationCode, setVerificationCode] = useState(["", "", "", ""]);
 
-	const [costCalculation, setCostCalculation] = useState(["", ""])
+	const [costCalculation, setCostCalculation] = useState(["", ""]);
+	const [organizationData, setOrganizationData] = useState({
+		inn: "",
+		ogrn: "",
+		name: "",
+		address: "",
+	});
+
+	const handleVerify = async () => {
+		const status = await verifyTel({phone: phone, code: verificationCode.join("")});
+		status && setStep(2);
+	};
+	const handleSetData = async () => {
+		// const status = await setData(organizationData);
+		status && setStep(3);
+	};
 
 	switch (step) {
 		case 1: {
@@ -38,7 +53,7 @@ export default function Registration() {
 						<p className={"mb-3 text-sm font-semibold text-black-100"}>Введите 6 цифры из сообщения</p>
 						<div className={"flex gap-2 items-center justify-center"}>
 							{verificationCode.map((value, index) => <Input
-								dataFocus={`focus-${index+1}`}
+								dataFocus={`focus-${index + 1}`}
 								type={"one-number"}
 								value={verificationCode[index]}
 								setValue={num => {
@@ -46,11 +61,12 @@ export default function Registration() {
 									old[index] = num;
 									setVerificationCode(old);
 								}}
+								key={index}
 							/>)}
 						</div>
 					</div>
 					<div>
-						<Button clickHandler={async () => await verifyTel({phone: phone, code: verificationCode.join("")}) && setStep(2)} type={"success"}>
+						<Button clickHandler={handleVerify} type={"success"}>
 							Подтвердить
 						</Button>
 						<p className={"text-sm text-black/40 text-center mt-4"}>
@@ -73,18 +89,23 @@ export default function Registration() {
 					<TitleAndOpinion title={"Подтверждение данных организации"}>
 						Проверьте правильность данных
 					</TitleAndOpinion>
-					<Input label={"ИНН"} placeholder={"366310082593"} />
-					<Input label={"ОГРН"} placeholder={"1085752004535"} />
+					<Input label={"ИНН"} placeholder={"366310082593"} value={organizationData.inn}
+						   setValue={(text) => setOrganizationData((prev) => ({...prev, inn: text}))} />
+					<Input label={"ОГРН"} placeholder={"1085752004535"} value={organizationData.ogrn} setValue={(text) => setOrganizationData((prev) => ({...prev, ogrn: text}))}/>
 					<Input label={"Форма собственности"} placeholder={"ООО без НДС"} />
 					<Input
 						label={"Наименование компании"}
-						placeholder={'ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "ТДВ"'}
+						placeholder={"ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ТДВ\""}
+						value={organizationData.name}
+						setValue={(text) => setOrganizationData((prev) => ({...prev, name: text}))}
 					/>
 					<Input
 						label={"Юридический адрес"}
 						placeholder={"302027, Орловская область, г Орёл, Октябрьская ул, д. 211, помещ. 114 офис 4"}
+						value={organizationData.address}
+						setValue={(text) => setOrganizationData((prev) => ({...prev, address: text}))}
 					/>
-					<Button clickHandler={() => setStep(3)} type={"success"} icon={"arrow-right"}>
+					<Button clickHandler={handleSetData} type={"success"} icon={"arrow-right"}>
 						Продолжить
 					</Button>
 				</>
@@ -170,19 +191,19 @@ export default function Registration() {
 							Сколько машин в организации?
 						</p>
 						<Input type={"one-number"} dataFocus={"focus-1"} value={costCalculation[0]} setValue={num => {
-							let old = [...costCalculation]
-							old[0] = num
-							setCostCalculation(old)
-						}}/>
+							let old = [...costCalculation];
+							old[0] = num;
+							setCostCalculation(old);
+						}} />
 						<Image width={32} height={32} src={"/img/icons/close.svg"} alt={"Иконка умножения"} />
 						<p className={"text-sm font-semibold text-black-100 text-center"}>
 							Сколько моек в неделю будет для каждой машины?
 						</p>
 						<Input type={"one-number"} dataFocus={"focus-2"} value={costCalculation[1]} setValue={num => {
-							let old = [...costCalculation]
-							old[1] = num
-							setCostCalculation(old)
-						}}/>
+							let old = [...costCalculation];
+							old[1] = num;
+							setCostCalculation(old);
+						}} />
 						<Image width={32} height={32} src={"/img/icons/close.svg"} alt={"Иконка умножения"} />
 						<div className={"flex gap-2 items-center justify-center"}>
 							<div className={"text-5xl text-green--main font-semibold max-[800px]:text-3xl"}>150₽</div>
