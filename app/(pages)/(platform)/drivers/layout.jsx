@@ -6,9 +6,10 @@ import Image from "next/image";
 import ModalWindow from "@/app/_components/ModalWindow";
 import Input from "@/app/_components/Input";
 import Button from "@/app/_components/Button";
-
 import randomstring from "randomstring";
 import toast from "react-hot-toast";
+import Table from "@/app/(pages)/(platform)/drivers/_components/Table";
+import drivers from "@/app/(pages)/(platform)/drivers/_components/drivers";
 
 export default function DriversLayout({ children }) {
 	const [isHaveContent, setIsHaveContent] = useState(false);
@@ -68,6 +69,7 @@ export default function DriversLayout({ children }) {
 						<p className={"font-semibold text-sm text-green--main"}>Добавить водителя</p>
 					</div>
 				</div>
+				<Table drivers={drivers}/>
 				{isHaveContent ? (
 					children
 				) : (

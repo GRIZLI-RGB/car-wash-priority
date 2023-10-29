@@ -8,9 +8,10 @@ import randomstring from "randomstring";
 import toast from "react-hot-toast";
 import Button from "@/app/_components/Button";
 import ModalWindow from "@/app/_components/ModalWindow";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
+import Item from "@/app/(pages)/(platform)/drivers/_components/Item";
 
-export default function Table() {
+export default function Table({drivers}) {
 	const [popups, setPopups] = useState({
 		editDriver: false,
 		deleteDriver: false,
@@ -22,8 +23,8 @@ export default function Table() {
 	});
 
 	useEffect(() => {
-		setPopupEditDriverData({ ...popupEditDriverData, password: randomstring.generate(9) });
-	}, []);
+		setPopupEditDriverData({...popupEditDriverData, password: randomstring.generate(9)});
+	}, [popupEditDriverData]);
 
 	return (
 		<>
@@ -40,100 +41,13 @@ export default function Table() {
 						</div>
 					))}
 				</div>
-				<div className={"flex w-full text-black-100"}>
-					<div className="flex basis-1/4 items-center px-4 lg:px-1 py-2">+7 (920) 471 - 16 - 66</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2">
-						<div
-							className={
-								"text-green--main text-sm md:text-xs p-1 bg-white border border-black/10 rounded-lg w-full flex-middle"
-							}>
-							280
-						</div>
-					</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2">2</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2 justify-evenly">
-						<Image
-							className={"cursor-pointer duration-300 hover:scale-125"}
-							width={20}
-							height={20}
-							src={"/img/icons/trash-can.svg"}
-							alt={"Удалить"}
-							onClick={() => setPopups({ ...popups, deleteDriver: true })}
-						/>
-						<Image
-							className={"cursor-pointer duration-300 hover:scale-125"}
-							width={20}
-							height={20}
-							src={"/img/icons/pencil.svg"}
-							alt={"Редактировать"}
-							onClick={() => setPopups({ ...popups, editDriver: true })}
-						/>
-					</div>
-				</div>
-				<div className={"flex w-full text-black-100"}>
-					<div className="flex basis-1/4 items-center px-4 lg:px-1 py-2">+7 (920) 471 - 16 - 66</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2">
-						<div
-							className={
-								"text-red--secondary text-sm md:text-xs p-1 bg-white border border-black/10 rounded-lg w-full flex-middle"
-							}>
-							99
-						</div>
-					</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2">2</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2 justify-evenly">
-						<Image
-							className={"cursor-pointer duration-300 hover:scale-125"}
-							width={20}
-							height={20}
-							src={"/img/icons/trash-can.svg"}
-							alt={"Удалить"}
-							onClick={() => setPopups({ ...popups, deleteDriver: true })}
-						/>
-						<Image
-							className={"cursor-pointer duration-300 hover:scale-125"}
-							width={20}
-							height={20}
-							src={"/img/icons/pencil.svg"}
-							alt={"Редактировать"}
-							onClick={() => setPopups({ ...popups, editDriver: true })}
-						/>
-					</div>
-				</div>
-				<div className={"flex w-full text-black-100"}>
-					<div className="flex basis-1/4 items-center px-4 lg:px-1 py-2">+7 (920) 471 - 16 - 66</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2">
-						<div
-							className={
-								"text-green--main text-sm p-1 md:text-xs bg-white border border-black/10 rounded-lg w-full flex-middle"
-							}>
-							165
-						</div>
-					</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2">8</div>
-					<div className="flex-middle basis-1/4 px-4 lg:px-1 py-2 justify-evenly">
-						<Image
-							className={"cursor-pointer duration-300 hover:scale-125"}
-							width={20}
-							height={20}
-							src={"/img/icons/trash-can.svg"}
-							alt={"Удалить"}
-							onClick={() => setPopups({ ...popups, deleteDriver: true })}
-						/>
-						<Image
-							className={"cursor-pointer duration-300 hover:scale-125"}
-							width={20}
-							height={20}
-							src={"/img/icons/pencil.svg"}
-							alt={"Редактировать"}
-							onClick={() => setPopups({ ...popups, editDriver: true })}
-						/>
-					</div>
-				</div>
+				{drivers.map(driver => <Item phone={driver.phone} balance={driver.balance} races={driver.races}
+											 deleteDriver={() => setPopups({...popups, deleteDriver: true})}
+											 editDriver={() => setPopups({...popups, editDriver: true})} key={driver.phone} />)}
 			</div>
 			<ModalWindow
 				trigger={popups.editDriver}
-				setTrigger={arg => setPopups({ ...popups, editDriver: arg })}
+				setTrigger={arg => setPopups({...popups, editDriver: arg})}
 				title={"Редактирование водителя"}>
 				<div className={"flex-middle flex-col gap-3"}>
 					<span>
@@ -146,7 +60,7 @@ export default function Table() {
 					label={"Номер телефона"}
 					getOnlyNumber
 					value={popupEditDriverData.telephone}
-					setValue={text => setPopupEditDriverData({ ...popupEditDriverData, telephone: text })}
+					setValue={text => setPopupEditDriverData({...popupEditDriverData, telephone: text})}
 				/>
 				<div className={"flex items-center justify-between gap-5 w-full"}>
 					<div>
@@ -155,13 +69,13 @@ export default function Table() {
 								label={"Пароль"}
 								disabled
 								value={popupEditDriverData.password}
-								setValue={arg => setPopupEditDriverData({ ...popupEditDriverData, password: arg })}
+								setValue={arg => setPopupEditDriverData({...popupEditDriverData, password: arg})}
 							/>
 						</div>
 						<p
 							className={"cursor-pointer mt-1 text-sm text-purple--main"}
 							onClick={() =>
-								setPopupEditDriverData({ ...popupEditDriverData, password: randomstring.generate(9) })
+								setPopupEditDriverData({...popupEditDriverData, password: randomstring.generate(9)})
 							}>
 							Сгенерировать новый
 						</p>
@@ -169,7 +83,7 @@ export default function Table() {
 					<div
 						className={"flex-middle gap-1 cursor-pointer duration-300 hover:opacity-75"}
 						onClick={() => {
-							navigator.clipboard.writeText(popupEditDriverData.password).then(function () {
+							navigator.clipboard.writeText(popupEditDriverData.password).then(function() {
 								toast.success("Пароль скопирован в буфер обмена");
 							});
 						}}>
@@ -178,24 +92,24 @@ export default function Table() {
 					</div>
 				</div>
 				<div className={"w-[388px] md:w-full"}>
-					<Button type={"success"} clickHandler={() => setPopups({ ...popups, editDriver: false })}>
+					<Button type={"success"} clickHandler={() => setPopups({...popups, editDriver: false})}>
 						Обновить
 					</Button>
 				</div>
 			</ModalWindow>
 			<ModalWindow
 				trigger={popups.deleteDriver}
-				setTrigger={arg => setPopups({ ...popups, deleteDriver: arg })}
+				setTrigger={arg => setPopups({...popups, deleteDriver: arg})}
 				title={"Удаление аккаунта"}>
 				<div className={"flex-middle flex-col gap-3"}>Вы уверены, что хотите удалить аккаунт:</div>
 				<div className={"flex-middle text-lg text-black-100 font-semibold"}>
 					+7 (920) 471 - 16 - 66
 				</div>
 				<div className={"w-[388px] md:w-full gap-4 flex flex-col"}>
-					<Button type={"danger"} clickHandler={() => setPopups({ ...popups, deleteDriver: false })}>
+					<Button type={"danger"} clickHandler={() => setPopups({...popups, deleteDriver: false})}>
 						Удалить
 					</Button>
-					<Button type={"secondary"} clickHandler={() => setPopups({ ...popups, deleteDriver: false })}>
+					<Button type={"secondary"} clickHandler={() => setPopups({...popups, deleteDriver: false})}>
 						Отмена
 					</Button>
 				</div>
