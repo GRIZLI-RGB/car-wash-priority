@@ -41,7 +41,7 @@ export default function Table({drivers}) {
 						</div>
 					))}
 				</div>
-				{drivers.map(driver => <Item phone={driver.phone} balance={driver.balance} races={driver.races}
+				{drivers.map(driver => <Item phone={driver.phone} balance={driver.data.balance} races={driver.races}
 											 deleteDriver={() => setPopups({...popups, deleteDriver: true})}
 											 editDriver={() => setPopups({...popups, editDriver: true})} key={driver.phone} />)}
 			</div>
@@ -60,7 +60,7 @@ export default function Table({drivers}) {
 					label={"Номер телефона"}
 					getOnlyNumber
 					value={popupEditDriverData.telephone}
-					setValue={text => setPopupEditDriverData({...popupEditDriverData, telephone: text})}
+					setValue={text => setPopupEditDriverData({...popupEditDriverData, phone: text})}
 				/>
 				<div className={"flex items-center justify-between gap-5 w-full"}>
 					<div>
