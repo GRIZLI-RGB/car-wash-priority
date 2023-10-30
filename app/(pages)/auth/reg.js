@@ -41,7 +41,39 @@ export async function verifyTel(data) {
 }
 
 export async function setData(data) {
-	const res = await axiosInstance.post(`/api/v2/organizations/:${readCookie("organization_id")}/registration/set-data`, data);
+	const res = await axiosInstance.post(`/api/v2/organizations/${readCookie("organization_id")}/registration/set-data`, data);
+
+	try {
+		if (res.status === 200) {
+			return true;
+		} else {
+			console.log("Неудачное заполнение данных:", res.status);
+			return false;
+		}
+	} catch (error) {
+		console.log("Неудачное заполнение данных:", error);
+		return false;
+	}
+}
+
+export async function reqPayData(data) {
+	const res = await axiosInstance.post(`/api/v2/organizations/${readCookie("organization_id")}/registration/set-pay-data`, data);
+
+	try {
+		if (res.status === 200) {
+			return true;
+		} else {
+			console.log("Неудачное заполнение данных:", res.status);
+			return false;
+		}
+	} catch (error) {
+		console.log("Неудачное заполнение данных:", error);
+		return false;
+	}
+}
+
+export async function reqContactData(data) {
+	const res = await axiosInstance.post(`/api/v2/organizations/${readCookie("organization_id")}/registration/set-contact-data`, data);
 
 	try {
 		if (res.status === 200) {
