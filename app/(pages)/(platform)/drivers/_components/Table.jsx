@@ -17,7 +17,7 @@ export default function Table() {
 	});
 
 	const [popupEditDriverData, setPopupEditDriverData] = useState({
-		telephone: "79204711666",
+		phone: "79204711666",
 		password: "",
 	});
 
@@ -145,8 +145,8 @@ export default function Table() {
 				<Input
 					label={"Номер телефона"}
 					getOnlyNumber
-					value={popupEditDriverData.telephone}
-					setValue={text => setPopupEditDriverData({ ...popupEditDriverData, telephone: text })}
+					value={popupEditDriverData.phone}
+					setValue={text => setPopupEditDriverData({ ...popupEditDriverData, phone: text })}
 				/>
 				<div className={"flex items-center justify-between gap-5 w-full"}>
 					<div>

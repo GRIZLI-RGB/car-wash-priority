@@ -1,42 +1,50 @@
 "use client";
 
-import Footer from "@/app/(pages)/auth/_components/Footer";
-import Image from "next/image";
 import { useRef, useState } from "react";
-import clsx from "clsx";
-import { CSSTransition, SwitchTransition, Transition } from "react-transition-group";
-import Button from "@/app/_components/Button";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { CSSTransition, SwitchTransition, Transition } from "react-transition-group";
+import clsx from "clsx";
+import {toast} from "react-hot-toast"
+
+import Footer from "@/app/(pages)/auth/_components/Footer";
+import Button from "@/app/_components/Button";
 import Input from "@/app/_components/Input";
 
+import validation from "@/app/utils/validation";
+
 export default function Auth() {
+    const router = useRouter();
+
+    // "Вход" (true) или "Регистрация" (false)
 	const [isLogin, setIsLogin] = useState(true);
 
 	const [loginData, setLoginData] = useState({
-		telephone: "",
+		phone: "",
 	});
+
 	const [registrationData, setRegistrationData] = useState({
-		telephone: "",
+		phone: "",
 		inn: "",
 	});
 
-	const router = useRouter();
-
 	const nodeRef = useRef(null);
 
-	const validateLogin = () => {
-		return true
-	}
-
-	const validateRegistration = () => {
-
-	}
-
 	const handleAuth = () => {
-		if (isLogin && validateLogin()) {
-			alert("Вы вошли в аккаунт");
-		} else {
-			router.push("/auth/registration");
+		if (isLogin) {
+            if (validation("phone", loginData.phone).isValid) {
+                router.push(`/auth/verification-phone?where=login&phone=${loginData.phone.replace(/[\D]/g, '')}`)
+            } else {
+                validation("phone", loginData.phone).errors.map(error => toast.error(error))
+            } 
+		}
+        
+        if (!isLogin) {
+            if (validation("phone", registrationData.phone).isValid && validation("inn", registrationData.inn).isValid) {
+                router.push(`/auth/verification-phone?where=registration&phone=${registrationData.phone.replace(/[\D]/g, '')}`)
+            } else {
+                [...validation("phone", registrationData.phone).errors, ...validation("inn", registrationData.inn).errors].map(error => toast.error(error))
+            }
 		}
 	};
 
@@ -101,12 +109,15 @@ export default function Auth() {
 					</Transition>
 					<div className={"flex flex-col gap-7"}>
 						<Input
-							value={loginData.telephone}
-							setValue={text => setLoginData({ telephone: text })}
+                            type="phone"
+							value={loginData.phone}
+							setValue={phone => {
+                                setLoginData({ phone })
+                                setRegistrationData(prev => ({...prev, phone}))
+                            }}
 							placeholder={"Номер телефона"}
-							getOnlyNumber
 						/>
-						{!isLogin && <Input placeholder={"ИНН организации"} getOnlyNumber />}
+						{!isLogin && <Input placeholder={"ИНН организации"} value={registrationData.inn} setValue={inn => setRegistrationData(prev => ({...prev, inn }))} getOnlyNumber />}
 					</div>
 					<Button type={"success"} clickHandler={handleAuth}>
 						<SwitchTransition>

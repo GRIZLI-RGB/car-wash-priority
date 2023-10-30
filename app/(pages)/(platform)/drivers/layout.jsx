@@ -20,7 +20,7 @@ export default function DriversLayout({ children }) {
 	});
 
 	const [popupNewDriverData, setPopupNewDriverData] = useState({
-		telephone: "",
+		phone: "",
 		password: "",
 	});
 
@@ -90,8 +90,8 @@ export default function DriversLayout({ children }) {
 				<Input
 					label={"Номер телефона"}
 					getOnlyNumber
-					value={popupNewDriverData.telephone}
-					setValue={text => setPopupNewDriverData({ ...popupNewDriverData, telephone: text })}
+					value={popupNewDriverData.phone}
+					setValue={text => setPopupNewDriverData({ ...popupNewDriverData, phone: text })}
 				/>
 				<div className={"flex items-center justify-between gap-5 w-full"}>
 					<div>
