@@ -3,7 +3,7 @@ import TitleAndOpinion from "@/app/(pages)/auth/_components/TitleAndOpinion";
 import Input from "@/app/_components/Input";
 import Button from "@/app/_components/Button";
 import {useState} from "react";
-import {sendAuthCode, verifyCode} from "../auth";
+import {getOrganizationData, saveOrganizationData, sendAuthCode, verifyCode} from "../auth";
 import {useRouter} from "next/navigation";
 
 export default function Verify({phone, closeModal}) {
@@ -14,6 +14,7 @@ export default function Verify({phone, closeModal}) {
 		const status = await verifyCode({phone: phone, code: verificationCode.join("")})
 
 		if (status) {
+			await saveOrganizationData();
 			router.push("/home");
 		} else {
 			alert("Такого пользователя не существует")
