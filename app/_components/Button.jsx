@@ -1,7 +1,9 @@
 import Image from "next/image";
 import clsx from "clsx";
 
-export default function Button({ type, children, icon, clickHandler }) {
+export default function Button({type, children, icon, clickHandler, disabled = false}) {
+	console.log("disabled", disabled)
+
 	switch (type) {
 		case "medium-gray": {
 			return (
@@ -11,6 +13,7 @@ export default function Button({ type, children, icon, clickHandler }) {
 						"duration-500 hover:opacity-75 rounded-lg px-2 py-1 text-sm text-black-100 bg-black/5"
 					}>
 					{children}
+					disabled={disabled}
 				</button>
 			);
 		}
@@ -22,6 +25,7 @@ export default function Button({ type, children, icon, clickHandler }) {
 						"duration-500 hover:opacity-75 rounded-lg px-2 py-1 text-sm text-white bg-black-100"
 					}>
 					{children}
+					disabled={disabled}
 				</button>
 			);
 		}
@@ -33,6 +37,7 @@ export default function Button({ type, children, icon, clickHandler }) {
 						"hover:bg-green--main hover:text-white duration-500 px-2 py-1 text-sm text-center w-full rounded-lg text-green--main border border-green--main"
 					}>
 					{children}
+					disabled={disabled}
 				</button>
 			);
 		case "danger-secondary":
@@ -43,6 +48,7 @@ export default function Button({ type, children, icon, clickHandler }) {
 						"hover:bg-red--secondary hover:text-white duration-500 px-2 py-[13px] text-center w-full rounded-lg text-red--secondary border border-red--secondary"
 					}>
 					{children}
+					disabled={disabled}
 				</button>
 			);
 		default:
@@ -57,7 +63,9 @@ export default function Button({ type, children, icon, clickHandler }) {
 							"text-black-100 bg-black/5": type === "secondary",
 						},
 						"max-[430px]:text-[16px]",
-					)}>
+					)}
+					disabled={disabled}
+				>
 					{icon === "arrow-left" && (
 						<Image
 							width={20}

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import clsx from "clsx";
+import InputMask from "react-input-mask";
 
-export default function Input({ disabled, value, setValue, type, label, placeholder, getOnlyNumber, invalid, dataFocus }) {
+export default function Input({ disabled, value, setValue, type, label, placeholder, getOnlyNumber, invalid, dataFocus, mask }) {
 	switch (type) {
 		// TODO: для одинарных инпутов сделать 1 значение вводимое и автоперевод на следующее
 		case "one-number": {
@@ -62,6 +63,34 @@ export default function Input({ disabled, value, setValue, type, label, placehol
 					/>
 				</div>
 			);
+		}
+		case "mask-input": {
+			return (
+				<div className={"w-full flex flex-col gap-3"}>
+					{label && <p className={"text-sm font-semibold text-black-100"}>{label}</p>}
+					<InputMask
+						mask={mask}
+						maskChar=" "
+						value={value}
+						onChange={e => setValue(e.target.value)}
+						className={clsx(
+							"text-sm text-black-100 placeholder:text-black/20 w-full rounded-lg px-4 py-2.5 border border-solid border-black/10 focus:border-black/20",
+							{
+								"text-black/20": disabled
+							}
+						)}
+						disabled={!!disabled}
+					>
+						{(inputProps) => (
+							<input
+								type={"text"}
+								placeholder={placeholder}
+								{...inputProps}
+							/>
+						)}
+					</InputMask>
+				</div>
+			)
 		}
 		default: {
 			return (

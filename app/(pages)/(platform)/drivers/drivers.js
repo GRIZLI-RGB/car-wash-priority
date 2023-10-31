@@ -6,7 +6,7 @@ export async function addDrivers(data) {
 
 	try {
 		if (res.status === 200) {
-			return res.data;
+			return true;
 		} else {
 			console.log("Неудачное заполнение данных:", res.status);
 			return false;

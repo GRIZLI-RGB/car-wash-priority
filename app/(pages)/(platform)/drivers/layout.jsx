@@ -42,8 +42,8 @@ export default function DriversLayout({children}) {
 	}, []);
 
 	const handleAddDrivers = async () => {
-		let drivers = await addDrivers(popupNewDriverData);
-		drivers = await getDrivers();
+		const status = await addDrivers(popupNewDriverData);
+		const drivers = await getDrivers();
 
 		setDrivers(drivers);
 

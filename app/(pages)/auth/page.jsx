@@ -13,6 +13,7 @@ import ModalWindow from "@/app/_components/ModalWindow";
 import Verify from "@/app/(pages)/auth/_components/Verify";
 import {sendAuthCode} from "@/app/(pages)/auth/auth";
 import {reg} from "./reg";
+import InputMask from "react-input-mask";
 
 export default function Auth() {
 	const [isLogin, setIsLogin] = useState(true);
@@ -25,6 +26,10 @@ export default function Auth() {
 		inn: "",
 	});
 	const [modalVerify, setModalVerify] = useState(false);
+	const [validateFields, setValidateFields] = useState({
+		phone: false,
+		inn: false
+	})
 
 	const router = useRouter();
 
@@ -49,6 +54,14 @@ export default function Auth() {
 			console.log("Данные не валидны");
 		}
 	};
+
+	const checkField = (key, value, minLength) => {
+		if (value.trim().length < minLength) {
+			setValidateFields({...validateFields, [key]: false});
+		} else {
+			setValidateFields({...validateFields, [key]: true});
+		}
+	}
 
 	return (
 		<section
@@ -113,16 +126,25 @@ export default function Auth() {
 						<Input
 							value={loginData.phone}
 							setValue={text => {
-								setLoginData({phone: text});
-								setRegistrationData({...registrationData, phone: text});
+								setLoginData({phone: text.replace(/[\s-()+]/g, '')});
+								setRegistrationData({...registrationData, phone: text.replace(/[\s-()+]/g, '')});
+								checkField("phone", text, 11)
 							}}
-							placeholder={"Номер телефона"}
+							placeholder={"+7 (___) ___-__-__"}
+							mask={"+7 (999) 999-99-99"}
+							type={"mask-input"}
 							getOnlyNumber
 						/>
 						{!isLogin && <Input placeholder={"ИНН организации"} getOnlyNumber
-											setValue={text => setRegistrationData({...registrationData, inn: text})} />}
+											setValue={text => {
+												setRegistrationData({...registrationData, inn: text});
+												checkField("inn", text, 10)
+											}}
+											mask={"9999999999"}
+											type={"mask-input"}
+						/>}
 					</div>
-					<Button type={"success"} clickHandler={isLogin ? handleAuth : handleReg}>
+					<Button type={"success"} clickHandler={isLogin ? handleAuth : handleReg} disabled={isLogin ? !validateFields.phone : !(validateFields.phone && validateFields.inn)}>
 						<SwitchTransition>
 							<CSSTransition
 								key={isLogin}

@@ -10,9 +10,11 @@ export async function sendAuthCode(data) {
 		if (res.status === 200) {
 			return true;
 		}
+		alert(res.data.message);
 		console.error("Ошибка при отправке send-auth-code:", res.status);
 		return false;
 	} catch (error) {
+		alert(error.response.data.message)
 		console.error("Ошибка при отправке send-auth-code:", error);
 		return false;
 	}
@@ -29,27 +31,30 @@ export async function verifyCode(data) {
 
 			return true;
 		}
+		alert(res.data.message);
 		console.error("Ошибка при авторизации:", res.status);
 		return false;
 	} catch (error) {
+		alert(error.response.data.message)
 		console.error("Ошибка при авторизации:", error);
 		return false;
 	}
 }
 
 export async function saveOrganizationData() {
-	const res = await axiosInstance.get(`/api/v2/organizations/`);
-
-	console.log("organization data", res.data.data);
 	try {
+		const res = await axiosInstance.get(`/api/v2/organizations/`);
+
 		if (res.status === 200) {
 			document.cookie = "organization_id=" + res.data.data[0].id;
 			return true;
 		} else {
+			alert(res.data.message);
 			console.log("Неудачное заполнение данных:", res.status);
 			return false;
 		}
 	} catch (error) {
+		alert(error.response.data.message)
 		console.log("Неудачное заполнение данных:", error);
 		return false;
 	}
