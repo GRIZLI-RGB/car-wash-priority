@@ -108,6 +108,7 @@ export default function Input({ disabled, value, setValue, type, label, placehol
 						value={value}
 						disabled={!!disabled}
 						onChange={e => setValue(e.target.value)}
+						style={invalid && {borderColor: "red"}}
 					/>
 				</div>
 			);

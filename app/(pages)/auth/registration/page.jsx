@@ -5,7 +5,7 @@ import Button from "@/app/_components/Button";
 import TitleAndOpinion from "@/app/(pages)/auth/_components/TitleAndOpinion";
 import {useState} from "react";
 import Input from "@/app/_components/Input";
-import { reqContactData, reqPayData, setData, verifyTel} from "../reg";
+import {reqContactData, reqPayData, setData, verifyTel} from "../reg";
 import {readCookie} from "@/app/utils/cookie";
 import {sendAuthCode} from "@/app/(pages)/auth/auth";
 import {useRouter} from "next/navigation";
@@ -35,12 +35,13 @@ export default function Registration() {
 		settlement_number: "",
 		name: "",
 		bic: "",
-		correspondent_account: ""
-	})
+		correspondent_account: "",
+	});
 	const [contactData, setContactData] = useState({
 		fio: "",
 		email: "",
-	})
+	});
+	const [invalidFields, setInvalidFields] = useState([]);
 
 	const router = useRouter();
 
@@ -50,19 +51,37 @@ export default function Registration() {
 		status && setStep(2);
 	};
 	const handleSetData = async () => {
-		const status = await setData(organizationData);
-		status && setStep(3);
+		const data = await setData(organizationData);
+
+		if (data === true) {
+			setStep(3);
+		} else {
+			setOrganizationData({...organizationData, ...data});
+			setInvalidFields(Object.keys(data));
+		}
 	};
 
 	const handlePayDataAuto = async () => {
-		const status = await reqPayData(payData);
-		status && setStep(4);
-	}
+		const data = await reqPayData(payData);
+
+		if (data === true) {
+			setStep(4);
+		} else {
+			setPayData({...payData, ...data});
+			setInvalidFields(Object.keys(data));
+		}
+	};
 
 	const handleContactData = async () => {
-		const status = await reqContactData(contactData);
-		status && setStep(5);
-	}
+		const data = await reqContactData(contactData);
+
+		if (data === true) {
+			setStep(5);
+		} else {
+			setContactData({...contactData, ...data});
+			setInvalidFields(Object.keys(data));
+		}
+	};
 
 	switch (step) {
 		case 1: {
@@ -114,20 +133,25 @@ export default function Registration() {
 						Проверьте правильность данных
 					</TitleAndOpinion>
 					<Input label={"ИНН"} placeholder={"366310082593"} value={organizationData.inn}
-						   setValue={(text) => setOrganizationData((prev) => ({...prev, inn: text}))} />
-					<Input label={"ОГРН"} placeholder={"1085752004535"} value={organizationData.ogrn} setValue={(text) => setOrganizationData((prev) => ({...prev, ogrn: text}))}/>
+						   setValue={(text) => setOrganizationData((prev) => ({...prev, inn: text}))}
+						   invalid={invalidFields.find((key) => key === "inn")} />
+					<Input label={"ОГРН"} placeholder={"1085752004535"} value={organizationData.ogrn}
+						   setValue={(text) => setOrganizationData((prev) => ({...prev, ogrn: text}))}
+						   invalid={invalidFields.find((key) => key === "ogrn")} />
 					<Input label={"Форма собственности"} placeholder={"ООО без НДС"} />
 					<Input
 						label={"Наименование компании"}
 						placeholder={"ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ТДВ\""}
 						value={organizationData.name}
 						setValue={(text) => setOrganizationData((prev) => ({...prev, name: text}))}
+						invalid={invalidFields.find((key) => key === "name")}
 					/>
 					<Input
 						label={"Юридический адрес"}
 						placeholder={"302027, Орловская область, г Орёл, Октябрьская ул, д. 211, помещ. 114 офис 4"}
 						value={organizationData.address}
 						setValue={(text) => setOrganizationData((prev) => ({...prev, address: text}))}
+						invalid={invalidFields.find((key) => key === "address")}
 					/>
 					<Button clickHandler={handleSetData} type={"success"} icon={"arrow-right"}>
 						Продолжить
@@ -141,10 +165,18 @@ export default function Registration() {
 					<TitleAndOpinion title={"Платежные данные"}>
 						Укажите реквизиты для получения счетов за обслуживание
 					</TitleAndOpinion>
-					<Input label={"Расчётный счёт"}  value={payData.settlement_number} setValue={(text) => setPayData((prev) => ({...prev, settlement_number: text}))}/>
-					<Input label={"Название банка"}  value={payData.name} setValue={(text) => setPayData((prev) => ({...prev, name: text}))}/>
-					<Input label={"БИК"} value={payData.bic} setValue={(text) => setPayData((prev) => ({...prev, bic: text}))}/>
-					<Input label={"Корреспондентский счёт"}  value={payData.correspondent_account} setValue={(text) => setPayData((prev) => ({...prev, correspondent_account: text}))}/>
+					<Input label={"Расчётный счёт"} value={payData.settlement_number}
+						   setValue={(text) => setPayData((prev) => ({...prev, settlement_number: text}))}
+						   invalid={invalidFields.find((key) => key === "settlement_number")} />
+					<Input label={"Название банка"} value={payData.name}
+						   setValue={(text) => setPayData((prev) => ({...prev, name: text}))}
+						   invalid={invalidFields.find((key) => key === "name")} />
+					<Input label={"БИК"} value={payData.bic}
+						   setValue={(text) => setPayData((prev) => ({...prev, bic: text}))}
+						   invalid={invalidFields.find((key) => key === "correspondent_account")} />
+					<Input label={"Корреспондентский счёт"} value={payData.correspondent_account}
+						   setValue={(text) => setPayData((prev) => ({...prev, correspondent_account: text}))}
+						   invalid={invalidFields.find((key) => key === "correspondent_account")} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
 							<Button clickHandler={() => setStep(2)} type={"secondary"} icon={"arrow-left"}>
@@ -175,8 +207,12 @@ export default function Registration() {
 							</span>
 						</p>
 					</TitleAndOpinion>
-					<Input label={"ФИО представителя"} value={contactData.fio} setValue={(text) => setContactData((prev) => ({...prev, fio: text}))}/>
-					<Input label={"E-mail для информирования "} value={contactData.email} setValue={(text) => setContactData((prev) => ({...prev, email: text}))}/>
+					<Input label={"ФИО представителя"} value={contactData.fio}
+						   setValue={(text) => setContactData((prev) => ({...prev, fio: text}))}
+						   invalid={invalidFields.find((key) => key === "fio")} />
+					<Input label={"E-mail для информирования "} value={contactData.email}
+						   setValue={(text) => setContactData((prev) => ({...prev, email: text}))}
+						   invalid={invalidFields.find((key) => key === "email")} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
 							<Button clickHandler={() => setStep(3)} type={"secondary"} icon={"arrow-left"}>
@@ -269,13 +305,13 @@ export default function Registration() {
 					<div className="flex flex-col gap-4 w-full">
 						<Button clickHandler={() => {
 							alert("Вы прошли регистрацию");
-							router.push("/home")
+							router.push("/home");
 						}} type={"success"}>
 							Получить счет
 						</Button>
 						<Button clickHandler={() => {
 							alert("Вы прошли регистрацию");
-							router.push("/home")
+							router.push("/home");
 						}} type={"secondary"}>
 							Пропустить
 						</Button>

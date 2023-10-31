@@ -18,6 +18,7 @@ export async function reg(data) {
 	} catch (error) {
 		alert(error.response.data.message)
 		console.log("Произошла ошибка в запросе на авторизацию:", error);
+		return error.response.data.errors;
 	}
 }
 
@@ -38,7 +39,7 @@ export async function verifyTel(data) {
 	} catch (error) {
 		alert(error.response.data.message)
 		console.log("Неудачная проверка номера:", error);
-		return false;
+		return error.response.data.errors;
 	}
 }
 
@@ -56,7 +57,7 @@ export async function setData(data) {
 	} catch (error) {
 		alert(error.response.data.message)
 		console.log("Неудачное заполнение данных:", error);
-		return false;
+		return error.response.data.errors;
 	}
 }
 
@@ -74,7 +75,7 @@ export async function reqPayData(data) {
 	} catch (error) {
 		alert(error.response.data.message)
 		console.log("Неудачное заполнение данных:", error);
-		return false;
+		return error.response.data.errors;
 	}
 }
 
@@ -92,6 +93,6 @@ export async function reqContactData(data) {
 	} catch (error) {
 		alert(error.response.data.message)
 		console.log("Неудачное заполнение данных:", error);
-		return false;
+		return error.response.data.errors;
 	}
 }
