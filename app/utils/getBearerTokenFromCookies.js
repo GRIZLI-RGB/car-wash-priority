@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-export default function useBearerTokenFromCookies() {
+export default function getBearerTokenFromCookies() {
 	useEffect(() => {
 		const matches = document.cookie.match(
 			new RegExp("(?:^|; )" + "bearer_token".replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"),
