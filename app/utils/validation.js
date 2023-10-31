@@ -12,6 +12,9 @@ export default function validation(type, value) {
 		case "inn":
 			if (value.length !== 10 && value.length !== 12) errors.push("Некорректный ИНН");
 			break;
+        case "ogrn":
+                if (value.length !== 13) errors.push("Некорректный ОГРН");
+                break;
 		default:
 			isValid = false;
 			errors.push("Некорректный способ валидации");

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import readCookie from "@/app/utils/readCookie";
+import getBearerTokenFromCookies from "@/app/utils/getBearerTokenFromCookies";
 
 const instance = axios.create({
-	baseURL: process.env.host,
+	baseURL: `${process.env.host}/api/v2`,
 	headers: {
-		Authorization: "Bearer " + readCookie("bearer_token"),
+		Authorization: "Bearer " + getBearerTokenFromCookies("bearer_token"),
 	},
 });
 

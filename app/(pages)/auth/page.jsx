@@ -41,7 +41,7 @@ export default function Auth() {
         
         if (!isLogin) {
             if (validation("phone", registrationData.phone).isValid && validation("inn", registrationData.inn).isValid) {
-                router.push(`/auth/verification-phone?where=registration&phone=${registrationData.phone.replace(/[\D]/g, '')}`)
+                router.push(`/auth/verification-phone?where=registration&phone=${registrationData.phone.replace(/[\D]/g, '')}&inn=${registrationData.inn}`)
             } else {
                 [...validation("phone", registrationData.phone).errors, ...validation("inn", registrationData.inn).errors].map(error => toast.error(error))
             }
