@@ -5,10 +5,9 @@ import Button from "@/app/_components/Button";
 import TitleAndOpinion from "@/app/(pages)/auth/_components/TitleAndOpinion";
 import {useState} from "react";
 import Input from "@/app/_components/Input";
-import {contactData, payData, reg, reqContactData, reqPayData, setData, verifyTel} from "../reg";
+import { reqContactData, reqPayData, setData, verifyTel} from "../reg";
 import {readCookie} from "@/app/utils/cookie";
 import {sendAuthCode} from "@/app/(pages)/auth/auth";
-import {router} from "next/client";
 import {useRouter} from "next/navigation";
 
 export default function Registration() {

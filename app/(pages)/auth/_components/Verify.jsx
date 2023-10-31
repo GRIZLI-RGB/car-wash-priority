@@ -41,6 +41,7 @@ export default function Verify({phone, closeModal}) {
 							old[index] = num;
 							setVerificationCode(old);
 						}}
+						key={index}
 					/>)}
 				</div>
 			</div>
