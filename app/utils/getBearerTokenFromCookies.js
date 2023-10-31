@@ -1,3 +1,5 @@
+"use client";
+
 export default function getBearerTokenFromCookies(name) {
 	const matches = document.cookie.match(
 		new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"),
