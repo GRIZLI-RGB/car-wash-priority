@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 
-export default function getBearerTokenFromCookies(name) {
+export default function useBearerTokenFromCookies() {
 	useEffect(() => {
 		const matches = document.cookie.match(
-			new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"),
+			new RegExp("(?:^|; )" + "bearer_token".replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"),
 		);
 		return matches ? decodeURIComponent(matches[1]) : undefined;
-	});
+	}, []);
 }
