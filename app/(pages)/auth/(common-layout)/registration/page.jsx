@@ -19,7 +19,7 @@ export default function Registration() {
 	// step = 3 - информация о представителе
 	// step = 4 - расчет расходов и пополнения баланса
 	// step = 5 - рекомендуемое пополнение
-	const [step, setStep] = useState(5);
+	const [step, setStep] = useState(1);
 
 	useEffect(() => {
 		setData(prev => ({
