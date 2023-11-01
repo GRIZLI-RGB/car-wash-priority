@@ -1,8 +1,5 @@
-import { cookies } from "next/headers";
+"use client";
 
 export default function getBearerTokenFromCookies() {
-	const cookiesStore = cookies();
-	const bearer_token = cookiesStore.get("bearer_token");
-
-	return bearer_token || undefined;
+	return "bearer_token" || undefined;
 }
