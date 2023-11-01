@@ -1,8 +1,8 @@
-"use client";
+import { cookies } from "next/headers";
 
 export default function getBearerTokenFromCookies() {
-	const matches = document.cookie.match(
-		new RegExp("(?:^|; )" + "bearer_token".replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"),
-	);
-	return matches ? decodeURIComponent(matches[1]) : undefined;
+	const cookiesStore = cookies();
+	const bearer_token = cookiesStore.get("bearer_token");
+
+	return bearer_token || undefined;
 }
