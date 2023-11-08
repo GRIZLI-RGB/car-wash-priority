@@ -2,7 +2,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import InputMask from "react-input-mask";
 
-export default function Input({ disabled, value, setValue, type, label, placeholder, getOnlyNumber, invalid, dataFocus, mask }) {
+export default function Input({ disabled, value, setValue, type, label, placeholder, getOnlyNumber, invalidValue= "", dataFocus, mask }) {
 	switch (type) {
 		// TODO: для одинарных инпутов сделать 1 значение вводимое и автоперевод на следующее
 		case "one-number": {
@@ -93,6 +93,7 @@ export default function Input({ disabled, value, setValue, type, label, placehol
 			)
 		}
 		default: {
+			console.log("invalidValue", invalidValue)
 			return (
 				<div className={"w-full flex flex-col gap-3"}>
 					{label && <p className={"text-sm font-semibold text-black-100"}>{label}</p>}
@@ -108,8 +109,9 @@ export default function Input({ disabled, value, setValue, type, label, placehol
 						value={value}
 						disabled={!!disabled}
 						onChange={e => setValue(e.target.value)}
-						style={invalid && {borderColor: "red"}}
+						style={{borderColor: invalidValue ? "red" : "inherit"}}
 					/>
+					{!!invalidValue && <span className={"text-sm"} style={{color: "red"}}>{invalidValue}</span>}
 				</div>
 			);
 		}

@@ -111,9 +111,12 @@ export default function DriversLayout({children}) {
 				</div>
 				<Input
 					label={"Номер телефона"}
-					getOnlyNumber
 					value={popupNewDriverData.phone}
-					setValue={text => setPopupNewDriverData({...popupNewDriverData, phone: text})}
+					setValue={text => setPopupNewDriverData({...popupNewDriverData, phone: text.replace(/[\s-()+]/g, '')})}
+					placeholder={"+7 (___) ___-__-__"}
+					mask={"+7 (999) 999-99-99"}
+					type={"mask-input"}
+					getOnlyNumber
 				/>
 				<div className={"flex items-center justify-between gap-5 w-full"}>
 					<div>

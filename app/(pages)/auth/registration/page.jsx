@@ -10,6 +10,23 @@ import {readCookie} from "@/app/utils/cookie";
 import {sendAuthCode} from "@/app/(pages)/auth/auth";
 import {useRouter} from "next/navigation";
 
+function formatPhoneNumber(phoneNumber) {
+	if (!phoneNumber) return ""
+
+	const cleaned = phoneNumber.replace(/\D/g, "");
+
+	if (cleaned.length === 11) {
+		const countryCode = cleaned[0];
+		const rest = cleaned.slice(1);
+
+		const formattedRest = `(***) ***-${rest.slice(6, 8)}-${rest.slice(8, 10)}`;
+
+		return `+* ${formattedRest}`;
+	} else {
+		return phoneNumber;
+	}
+}
+
 export default function Registration() {
 	// step = 1 - подтверждение номера
 	// step = 2 - подтверждение данных организации
@@ -26,22 +43,15 @@ export default function Registration() {
 
 	const [costCalculation, setCostCalculation] = useState(["", ""]);
 	const [organizationData, setOrganizationData] = useState({
-		inn: "",
-		ogrn: "",
-		name: "",
-		address: "",
+		inn: "", ogrn: "", name: "", address: "",
 	});
 	const [payData, setPayData] = useState({
-		settlement_number: "",
-		name: "",
-		bic: "",
-		correspondent_account: "",
+		settlement_number: "", name: "", bic: "", correspondent_account: "",
 	});
 	const [contactData, setContactData] = useState({
-		fio: "",
-		email: "",
+		fio: "", email: "",
 	});
-	const [invalidFields, setInvalidFields] = useState([]);
+	const [invalidFields, setInvalidFields] = useState({});
 
 	const router = useRouter();
 
@@ -56,8 +66,7 @@ export default function Registration() {
 		if (data === true) {
 			setStep(3);
 		} else {
-			setOrganizationData({...organizationData, ...data});
-			setInvalidFields(Object.keys(data));
+			setInvalidFields(data);
 		}
 	};
 
@@ -67,8 +76,7 @@ export default function Registration() {
 		if (data === true) {
 			setStep(4);
 		} else {
-			setPayData({...payData, ...data});
-			setInvalidFields(Object.keys(data));
+			setInvalidFields(data);
 		}
 	};
 
@@ -78,20 +86,18 @@ export default function Registration() {
 		if (data === true) {
 			setStep(5);
 		} else {
-			setContactData({...contactData, ...data});
-			setInvalidFields(Object.keys(data));
+			setInvalidFields(data);
 		}
 	};
 
 	switch (step) {
 		case 1: {
-			return (
-				<>
+			return (<>
 					<Image width={"80"} height={"80"} src={"/img/icons/phone.svg"} alt={"Иконка телефона"} />
 					<TitleAndOpinion title={"Верификация номера"}>
 						Мы отправили код подтверждения на номер:
 					</TitleAndOpinion>
-					<div className={"text-lg font-semibold text-black-100"}>* *** *** - 16 - 66</div>
+					<div className={"text-lg font-semibold text-black-100"}>{formatPhoneNumber(phone)}</div>
 					<div className={"text-center"}>
 						<p className={"mb-3 text-sm font-semibold text-black-100"}>Введите 6 цифры из сообщения</p>
 						<div className={"flex gap-2 items-center justify-center"}>
@@ -123,60 +129,57 @@ export default function Registration() {
 							</a>
 						</p>
 					</div>
-				</>
-			);
+				</>);
 		}
 		case 2: {
-			return (
-				<>
+			return (<>
 					<TitleAndOpinion title={"Подтверждение данных организации"}>
 						Проверьте правильность данных
 					</TitleAndOpinion>
 					<Input label={"ИНН"} placeholder={"366310082593"} value={organizationData.inn}
 						   setValue={(text) => setOrganizationData((prev) => ({...prev, inn: text}))}
-						   invalid={invalidFields.find((key) => key === "inn")} />
+						   invalidValue={invalidFields?.inn}
+					/>
 					<Input label={"ОГРН"} placeholder={"1085752004535"} value={organizationData.ogrn}
 						   setValue={(text) => setOrganizationData((prev) => ({...prev, ogrn: text}))}
-						   invalid={invalidFields.find((key) => key === "ogrn")} />
+						   invalidValue={invalidFields?.ogrn} />
 					<Input label={"Форма собственности"} placeholder={"ООО без НДС"} />
 					<Input
 						label={"Наименование компании"}
 						placeholder={"ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ТДВ\""}
 						value={organizationData.name}
 						setValue={(text) => setOrganizationData((prev) => ({...prev, name: text}))}
-						invalid={invalidFields.find((key) => key === "name")}
+						invalidValue={invalidFields?.name}
 					/>
 					<Input
 						label={"Юридический адрес"}
 						placeholder={"302027, Орловская область, г Орёл, Октябрьская ул, д. 211, помещ. 114 офис 4"}
 						value={organizationData.address}
 						setValue={(text) => setOrganizationData((prev) => ({...prev, address: text}))}
-						invalid={invalidFields.find((key) => key === "address")}
+						invalidValue={invalidFields?.address}
 					/>
 					<Button clickHandler={handleSetData} type={"success"} icon={"arrow-right"}>
 						Продолжить
 					</Button>
-				</>
-			);
+				</>);
 		}
 		case 3: {
-			return (
-				<>
+			return (<>
 					<TitleAndOpinion title={"Платежные данные"}>
 						Укажите реквизиты для получения счетов за обслуживание
 					</TitleAndOpinion>
 					<Input label={"Расчётный счёт"} value={payData.settlement_number}
 						   setValue={(text) => setPayData((prev) => ({...prev, settlement_number: text}))}
-						   invalid={invalidFields.find((key) => key === "settlement_number")} />
+						   invalidValue={invalidFields?.settlement_number} />
 					<Input label={"Название банка"} value={payData.name}
 						   setValue={(text) => setPayData((prev) => ({...prev, name: text}))}
-						   invalid={invalidFields.find((key) => key === "name")} />
+						   invalidValue={invalidFields?.name} />
 					<Input label={"БИК"} value={payData.bic}
 						   setValue={(text) => setPayData((prev) => ({...prev, bic: text}))}
-						   invalid={invalidFields.find((key) => key === "correspondent_account")} />
+						   invalidValue={invalidFields?.bic} />
 					<Input label={"Корреспондентский счёт"} value={payData.correspondent_account}
 						   setValue={(text) => setPayData((prev) => ({...prev, correspondent_account: text}))}
-						   invalid={invalidFields.find((key) => key === "correspondent_account")} />
+						   invalidValue={invalidFields?.correspondent_account} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
 							<Button clickHandler={() => setStep(2)} type={"secondary"} icon={"arrow-left"}>
@@ -189,12 +192,10 @@ export default function Registration() {
 							</Button>
 						</div>
 					</div>
-				</>
-			);
+				</>);
 		}
 		case 4: {
-			return (
-				<>
+			return (<>
 					<TitleAndOpinion title={"Информация о представителе"}>
 						<p className={"flex gap-3 flex-col"}>
 							<span>
@@ -209,10 +210,10 @@ export default function Registration() {
 					</TitleAndOpinion>
 					<Input label={"ФИО представителя"} value={contactData.fio}
 						   setValue={(text) => setContactData((prev) => ({...prev, fio: text}))}
-						   invalid={invalidFields.find((key) => key === "fio")} />
+						   invalidValue={invalidFields?.fio} />
 					<Input label={"E-mail для информирования "} value={contactData.email}
 						   setValue={(text) => setContactData((prev) => ({...prev, email: text}))}
-						   invalid={invalidFields.find((key) => key === "email")} />
+						   invalidValue={invalidFields?.email} />
 					<div className={"flex gap-7 w-full max-[800px]:gap-1"}>
 						<div className={"w-1/2"}>
 							<Button clickHandler={() => setStep(3)} type={"secondary"} icon={"arrow-left"}>
@@ -225,12 +226,10 @@ export default function Registration() {
 							</Button>
 						</div>
 					</div>
-				</>
-			);
+				</>);
 		}
 		case 5: {
-			return (
-				<>
+			return (<>
 					<TitleAndOpinion title={"Расчет расходов и пополнения баланса"}>
 						<p className={"flex gap-3 flex-col"}>
 							<span>Укажите данные своего автопарка, мы рассчитаем рекомендуему сумму пополнения.</span>
@@ -244,9 +243,7 @@ export default function Registration() {
 						</p>
 					</TitleAndOpinion>
 					<div
-						className={
-							"w-full rounded-2xl  max-[800px]:px-6 px-12 py-6 bg-[rgba(229,236,246,0.50)] flex flex-col gap-3 items-center"
-						}>
+						className={"w-full rounded-2xl  max-[800px]:px-6 px-12 py-6 bg-[rgba(229,236,246,0.50)] flex flex-col gap-3 items-center"}>
 						<p className={"text-sm font-semibold text-black-100 text-center"}>
 							Сколько машин в организации?
 						</p>
@@ -281,24 +278,18 @@ export default function Registration() {
 							Пропустить
 						</Button>
 					</div>
-				</>
-			);
+				</>);
 		}
 		case 6: {
-			return (
-				<>
+			return (<>
 					<TitleAndOpinion title={"Рекомендуемое пополнение"}>
 						Чтобы получить возможность овердрафта пополните баланс на рекомендуему сумму
 					</TitleAndOpinion>
 					<div
-						className={
-							"w-full rounded-2xl px-12 py-10 bg-[rgba(229,236,246,0.50)] flex flex-col gap-3 items-center"
-						}>
+						className={"w-full rounded-2xl px-12 py-10 bg-[rgba(229,236,246,0.50)] flex flex-col gap-3 items-center"}>
 						<p className={"text-sm font-semibold text-black-100 text-center"}>Рекомендуемая сумма</p>
 						<p
-							className={
-								"text-center px-[21px] py-[11px] flex-middle rounded-lg font-semibold text-2xl leading-[150%] border border-solid border-black/20 bg-white"
-							}>
+							className={"text-center px-[21px] py-[11px] flex-middle rounded-lg font-semibold text-2xl leading-[150%] border border-solid border-black/20 bg-white"}>
 							64 000
 						</p>
 					</div>
@@ -319,8 +310,7 @@ export default function Registration() {
 					<p className={"text-center text-sm text-black/40"}>
 						Если вы пропустите этот шаг, то для вашего аккаунта возможность овердрафта будет отключена!
 					</p>
-				</>
-			);
+				</>);
 		}
 	}
 }

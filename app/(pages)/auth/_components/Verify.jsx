@@ -3,8 +3,23 @@ import TitleAndOpinion from "@/app/(pages)/auth/_components/TitleAndOpinion";
 import Input from "@/app/_components/Input";
 import Button from "@/app/_components/Button";
 import {useState} from "react";
-import {getOrganizationData, saveOrganizationData, sendAuthCode, verifyCode} from "../auth";
+import {saveOrganizationData, sendAuthCode, verifyCode} from "../auth";
 import {useRouter} from "next/navigation";
+
+function formatPhoneNumber(phoneNumber) {
+	const cleaned = phoneNumber.replace(/\D/g, '');
+
+	if (cleaned.length === 11) {
+		const countryCode = cleaned[0];
+		const rest = cleaned.slice(1);
+
+		const formattedRest = `(***) ***-${rest.slice(6, 8)}-${rest.slice(8, 10)}`;
+
+		return `+* ${formattedRest}`;
+	} else {
+		return phoneNumber;
+	}
+}
 
 export default function Verify({phone, closeModal}) {
 	const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""]);
@@ -28,7 +43,7 @@ export default function Verify({phone, closeModal}) {
 			<TitleAndOpinion title={"Верификация номера"}>
 				Мы отправили код подтверждения на номер:
 			</TitleAndOpinion>
-			<div className={"text-lg font-semibold text-black-100"}>phone</div>
+			<div className={"text-lg font-semibold text-black-100"}>{formatPhoneNumber(phone)}</div>
 			<div className={"text-center"}>
 				<p className={"mb-3 text-sm font-semibold text-black-100"}>Введите 4 цифры из сообщения</p>
 				<div className={"flex gap-2 items-center justify-center"}>

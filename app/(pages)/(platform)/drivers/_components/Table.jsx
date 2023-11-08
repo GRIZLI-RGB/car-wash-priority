@@ -24,7 +24,7 @@ export default function Table({drivers}) {
 
 	useEffect(() => {
 		setPopupEditDriverData({...popupEditDriverData, password: randomstring.generate(9)});
-	}, [popupEditDriverData]);
+	}, []);
 
 	return (
 		<>
@@ -58,9 +58,12 @@ export default function Table({drivers}) {
 				</div>
 				<Input
 					label={"Номер телефона"}
-					getOnlyNumber
 					value={popupEditDriverData.telephone}
-					setValue={text => setPopupEditDriverData({...popupEditDriverData, phone: text})}
+					setValue={text => setPopupEditDriverData({...popupEditDriverData, phone: text.replace(/[\s-()+]/g, '')})}
+					placeholder={"+7 (___) ___-__-__"}
+					mask={"+7 (999) 999-99-99"}
+					type={"mask-input"}
+					getOnlyNumber
 				/>
 				<div className={"flex items-center justify-between gap-5 w-full"}>
 					<div>

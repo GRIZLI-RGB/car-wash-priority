@@ -11,12 +11,10 @@ export async function reg(data) {
 			document.cookie = "phone=" + data.phone;
 			return true;
 		}
-		alert(res.data.message);
 		console.log("Произошла ошибка в запросе на авторизацию:", res.status);
 		return false;
 
 	} catch (error) {
-		alert(error.response.data.message)
 		console.log("Произошла ошибка в запросе на авторизацию:", error);
 		return error.response.data.errors;
 	}
@@ -32,12 +30,10 @@ export async function verifyTel(data) {
 
 			return true;
 		} else {
-			alert(res.data.message);
 			console.log("Неудачная проверка номера:", res.status);
 			return false;
 		}
 	} catch (error) {
-		alert(error.response.data.message)
 		console.log("Неудачная проверка номера:", error);
 		return error.response.data.errors;
 	}
@@ -50,12 +46,10 @@ export async function setData(data) {
 		if (res.status === 200) {
 			return true;
 		} else {
-			alert(res.data.message);
 			console.log("Неудачное заполнение данных:", res.status);
 			return false;
 		}
 	} catch (error) {
-		alert(error.response.data.message)
 		console.log("Неудачное заполнение данных:", error);
 		return error.response.data.errors;
 	}
@@ -68,12 +62,10 @@ export async function reqPayData(data) {
 		if (res.status === 200) {
 			return true;
 		} else {
-			alert(res.data.message);
 			console.log("Неудачное заполнение данных:", res.status);
 			return false;
 		}
 	} catch (error) {
-		alert(error.response.data.message)
 		console.log("Неудачное заполнение данных:", error);
 		return error.response.data.errors;
 	}
@@ -86,12 +78,10 @@ export async function reqContactData(data) {
 		if (res.status === 200) {
 			return true;
 		} else {
-			alert(res.data.message);
 			console.log("Неудачное заполнение данных:", res.status);
 			return false;
 		}
 	} catch (error) {
-		alert(error.response.data.message)
 		console.log("Неудачное заполнение данных:", error);
 		return error.response.data.errors;
 	}
